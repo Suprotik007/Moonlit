@@ -10,6 +10,7 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import img1 from '../assets/img11.jpeg';
 import img2 from '../assets/img22.jpeg';
 import img3 from '../assets/img33.jpeg';
+import { Link } from 'react-router';
 
 const Banner = () => {
   return (
@@ -36,7 +37,7 @@ const Banner = () => {
           <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-4 text-center">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Unwind in Luxury</h2>
             <p className="text-xl mb-6 max-w-md">Enjoy world-class amenities, breathtaking views, and personalized service for a truly memorable getaway.</p>
-            <button className="btn btn-outline  btn-lg">Visit now</button>
+         <Link to='/rooms'><button className="btn btn-outline btn-lg">Visit now</button></Link>
           </div>
         </SwiperSlide>
 
@@ -50,7 +51,7 @@ const Banner = () => {
           <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-4 text-center">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Book Now, Save More</h2>
             <p className="text-xl mb-6 max-w-md">Take advantage of exclusive offers and flexible booking options—your dream vacation is just a click away!</p>
-            <button className="btn btn-outline btn-lg">Find more</button>
+            <Link to='/rooms'><button className="btn btn-outline btn-lg">Find more</button></Link>
           </div>
         </SwiperSlide>
 
@@ -64,7 +65,7 @@ const Banner = () => {
           <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-4 text-center">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">Discover Your Perfect Stay</h2>
             <p className="text-xl mb-6 max-w-md">Experience comfort and elegance in our beautifully designed rooms, tailored for relaxation and convenience</p>
-            <button className="btn btn-outline btn-lg">View rooms</button>
+            <Link to='/rooms'><button className="btn btn-outline btn-lg">View rooms</button></Link>
           </div>
         </SwiperSlide>
       </Swiper>
