@@ -1,10 +1,10 @@
 
-
 import React, {  useState, useContext } from 'react';
 import { Link,  useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
-import Navbar from '../Components/NavBar';
+import Lottie from "lottie-react";
+import regLottie from '../assets/lottieLogin.json.json'
 
 const RegBox = () => {
   
@@ -28,8 +28,6 @@ const RegBox = () => {
       return; 
     }
 
-    // console.log({ name, photo, email, password });
-
     createUser(email, password)
       .then(result => {
         const user = result.user;
@@ -38,8 +36,7 @@ const RegBox = () => {
             setUser({ ...user });
             navigate('/');
           })
-          .catch(error => {
-            // console.error('Update user error:', error);
+          .catch(error => {      
             setUser(user);
           });
         toast.success('Registration successful');
@@ -52,34 +49,45 @@ const RegBox = () => {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <div className="hero   min-h-screen">
-        <div className="card border-2 border-green-800 my-10 text-green-800 p-5 bg-base-300 rounded-2xl w-full max-w-sm shrink-0 shadow-2xl">
+   
+      <div className="hero min-h-screen">
+
+         <div className="hero-content  flex-col lg:flex-row ">
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl   mb-10 font-bold text-center">Register!</h1>
+             <Lottie className='' animationData={regLottie} loop={true}> </Lottie>
+               
+            </div>
+        <div className="card border-2  my-10 rounded-2xl w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            <h1 className="text-4xl text-green-800  mb-10 font-bold text-center">Register!</h1>
+            
             <form onSubmit={handleRegister} className="fieldset">
               <label className="label font-semibold">Name</label>
-              <input type="text" required name='name' className="input text-black border-2 border-green-800   font-semibold" placeholder="Enter your name" />
+              <input type="text" required name='name' className="input text-black border-2 border-black   font-semibold" placeholder="Enter your name" />
               <label className="label  font-semibold">Photo URL</label> 
-              <input type="text" required name='photo' className="input text-black border-2 border-green-800  font-semibold" placeholder="Photo URL" />
+              <input type="text" required name='photo' className="input text-black border-2 border-black  font-semibold" placeholder="Photo URL" />
               <label className="label font-semibold">Email</label>
-              <input type="email" required name='email' className="input text-black border-2 border-green-800  font-semibold" placeholder="Email" />
+              <input type="email" required name='email' className="input text-black border-2 border-black  font-semibold" placeholder="Email" />
               <label className="label font-semibold">Password</label>
               <div className='relative'>
-                <input type={showPass ? 'text' : 'password'} required name='password' className="input text-black border-2 border-green-800  font-semibold" placeholder="Password" />
+                <input type={showPass ? 'text' : 'password'} required name='password' className="input text-black border-2 border-black font-semibold" placeholder="Password" />
                 
               </div>
-              <button type='submit' className="btn btn-accent mt-4">Register</button>
+              
+                <button type='submit' className="btn btn-dash mt-5 text-gray-500  btn-outline border-3 border-black hover:border-teal-500 rounded-4xl hover:text-teal-300 hover:bg-black ">
+ 
+  Register
+</button> 
               <ToastContainer />
              
-              <p className='font-semibold text-center mt-3'>
-                Already Have An Account? <Link to='/login'><span className='text-blue-500 font-semibold'>Login</span></Link>
+              <p className='font-bold text-center mt-3'>
+                Already Have An Account? <Link to='/login'><span className='text-amber-700 font-bold'>Login</span></Link>
               </p>
             </form>
           </div>
         </div>
       </div>
-      
+      </div>
     </div>
   );
 };
