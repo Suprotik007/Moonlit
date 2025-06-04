@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg'
 const Footer = () => {
   return (
     <div>
-      <footer className="footer footer-horizontal footer-center border-t-2   mb-2 p-10 w-11/12 mx-auto">
+      <footer className="footer footer-horizontal footer-center border-t-2  p-10 w-11/12 mx-auto">
   <nav className="grid grid-flow-col gap-4">
     <a className="link link-hover hidden sm:block">About Us</a>
     <a className="link link-hover">Contact</a>

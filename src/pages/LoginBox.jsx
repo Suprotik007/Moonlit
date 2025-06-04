@@ -41,7 +41,7 @@ const LoginBox = () => {
     })
     .catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      const errorMessage = 'Either Email or Password is wrong';
       toast.error(errorMessage)
     });
   }

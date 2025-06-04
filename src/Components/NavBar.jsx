@@ -32,7 +32,7 @@ const Navbar = () => {
           Home
         </NavLink>
          <NavLink
-          to="/explore"
+          to="/rooms"
           className={({ isActive }) =>
             isActive ? 'text-gray-950 border-b-2 border-black' : ''
           }
@@ -41,7 +41,7 @@ const Navbar = () => {
         </NavLink>
         
         <NavLink
-          to="/myTips"
+          to="/myBookings"
           className={({ isActive }) =>
             isActive ? 'text-gray-950 border-b-2 border-black' : ''
           }
