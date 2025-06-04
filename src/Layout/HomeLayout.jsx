@@ -6,9 +6,16 @@ import Footer from '../Components/Footer';
 const HomeLayout = () => {
     return (
         <div>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+           <header className='mb-8'>
+             <Navbar></Navbar>
+           </header>
+           <main>
+             <Outlet></Outlet>
+           </main>
+           <footer className='mt-8'>
+<Footer></Footer>
+           </footer>
+            
         </div>
     );
 };
