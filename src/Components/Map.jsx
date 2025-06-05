@@ -10,7 +10,8 @@ const Map = () => {
       center={position}
       zoom={13}
       scrollWheelZoom={false}
-      style={{ height: '300px', width: '400px' }} // fixed size for the map
+      style={{ height: '400px', width: '400px' }}
+       
     >
       <TileLayer
      

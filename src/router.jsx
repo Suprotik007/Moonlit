@@ -10,6 +10,7 @@ import ErrorPage from "./pages/Error";
 import Rooms from "./pages/Rooms";
 import MyBookings from "./pages/MyBookings";
 import Home from "./pages/Home";
+import RoomDetails from "./pages/RoomDetails";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     {
      path:'/myBookings',
       Component: MyBookings,
+  },
+    {
+     path:'/roomDetails',
+      Component: RoomDetails,
   },
    ]
     

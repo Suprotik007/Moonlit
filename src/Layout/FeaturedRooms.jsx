@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TopRoomCard from './TopRoomCard';
+import TopRoomCard from '../Components/TopRoomCard';
 
 const FeaturedRooms = () => {
     const [topRooms,setTopRooms]=useState([])
