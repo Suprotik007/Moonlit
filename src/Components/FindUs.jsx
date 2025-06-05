@@ -5,7 +5,7 @@ const FindUs = () => {
     return (
         <div>
             <div className='w-11/12 mx-auto'>
-            <h1 className='text-4xl text-gray-700 border-b-2 w-4/12 mx-auto py-5 mb-10'>Find Us</h1>
+            <h1 className='text-4xl text-center font-semibold text-gray-600 mt-15 border-b-2 pb-5 w-4/12 mx-auto mb-15'>Find Us</h1>
            <div className='flex lg:flex-row justify-between'>
              <div className='space-y-12'>
 <span>

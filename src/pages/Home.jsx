@@ -1,7 +1,8 @@
 import React from 'react';
 import Banner from '../Components/Banner';
-import Map from '../Components/Map';
+
 import FindUs from '../Components/FindUs';
+import FeaturedRooms from '../Components/FeaturedRooms';
 
 const Home = () => {
     return (
@@ -9,6 +10,7 @@ const Home = () => {
             
             <Banner></Banner>
            <FindUs></FindUs>
+           <FeaturedRooms></FeaturedRooms>
         </div>
     );
 };
