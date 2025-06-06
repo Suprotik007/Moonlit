@@ -23,7 +23,7 @@ const TopRoomCard = ({ singleRoom }) => {
           Price : <span className="badge bg-gray-600 border-2 text-white">{singleRoom.price}</span>
         </p>
         <div className="card-actions justify-end">
-          <Link to="/roomDetails">
+          <Link to={`/roomDetails/${singleRoom._id}`}>
             <button className="btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white">
               Book Now
             </button>

@@ -40,8 +40,8 @@ const router = createBrowserRouter([
       Component: MyBookings,
   },
     {
-     path:'/roomDetails',
-      Component: RoomDetails,
+     path:'/roomDetails/:_id',
+      element: <RoomDetails></RoomDetails>
   },
    ]
     
