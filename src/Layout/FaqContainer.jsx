@@ -12,20 +12,20 @@ const FaqContainer = () => {
 <div>
                <FaqBox></FaqBox>
            </div>
-                 <div className=''>
+                 <div className=' hidden sm:block md:display'>
         <motion.img
          src={img1}
          animate={{x:[0,170,0]}}
          transition={{duration:8,repeat:Infinity}}
-         className='max-w  rounded-tl-4xl rounded-br-4xl  ' alt="" />
+         className='max-w border-5 border-gray-700 rounded-tl-4xl rounded-br-4xl  ' alt="" />
     </div>
 
 
 
-              <div className=''>
+              <div className='  hidden sm:block md:display'>
         <motion.img src={img2}
         animate={{y:[0,220,0]}}
-         transition={{duration:8,repeat:Infinity}} className='max-w  rounded-tl-4xl rounded-br-4xl  ' alt="" />
+         transition={{duration:8,repeat:Infinity}} className='max-w border-5 border-gray-700  rounded-tl-4xl rounded-br-4xl  ' alt="" />
     </div>
             </section>
         </div>
