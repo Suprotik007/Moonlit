@@ -1,6 +1,5 @@
 
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,11 +8,28 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
   
   const {user} =useContext(AuthContext)
     const [bookingDate, setBookingDate] = useState('');
-  const [bookingData,setBookingData]=useState()
+  const [bookingData,setBookingData]=useState(singleRoomDetail.available)
+  const[available,setAvailable]=useState(true)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  useEffect(() => {
+  const checkIfRoomBooked = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/bookedRooms/${singleRoomDetail._id}`);
+      const data = await res.json();
+      if (data.isBooked) {
+        setAvailable(false); // disable button
+      }
+    } catch (error) {
+      console.error('Error checking booking status:', error);
+    }
+  };
+
+  checkIfRoomBooked();
+}, [singleRoomDetail._id]);
+
 
   const handleConfirmBooking=(e)=>{
         e.preventDefault()
@@ -21,17 +37,18 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
                 closeModal();
  const confirmedBookingData = {
       ...bookingData,
+       roomId: singleRoomDetail._id,
       Name: user?.displayName || '',
       Email: user?.email || '',
       Title: singleRoomDetail.title,
       Image: singleRoomDetail.image,
       Size: singleRoomDetail.size,
       Price: singleRoomDetail.price,
-      Date:bookingDate
+      Booked_For:bookingDate
     
     };
 
-    fetch('http://localhost:3000/bookedRooms',{
+    fetch(`http://localhost:3000/bookedRooms/${singleRoomDetail._id}`,{
         method:"POST",
         headers:{ 
             'Content-Type':'application/json'
@@ -41,8 +58,10 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
         .then(res=>res.json())
     .then(data=>
       console.log('after adding data to db',data))
-    console.log('Submitting booking:', confirmedBookingData);
+    // console.log('Submitting booking:', confirmedBookingData);
+       setAvailable(false)
     toast.success('Booked successfully!')
+ 
   }
 
   return (
@@ -63,16 +82,18 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
             <p className="text-lg font-bold">Size : {singleRoomDetail.size}</p>
             <p className="text-lg font-bold">Price : {singleRoomDetail.price}</p>
             <p className="text-lg font-bold">
-              Facilities : <span className='font-bold'>{singleRoomDetail.facilities.join(', ')}</span>
+              Facilities : <span className='font-bold text-fuchsia-600'>{singleRoomDetail.facilities.join(', ')}</span>
             </p>
   <p className="text-lg font-bold">Total Reviews : {singleRoomDetail.reviews}</p>
             <div className="card-actions justify-end mt-4">
-              <button 
-                className="btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white"
-                onClick={openModal}
-              >
-                Book Now
-              </button>
+              <button
+  disabled={!available}
+  className={`btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white ${!available ? 'bg-gray-900 cursor-not-allowed' : ''}`}
+  onClick={openModal}
+>
+  {available ? 'Book Now' : 'Not available'}
+</button>
+
             </div>
           </div>
         </div>
@@ -83,7 +104,7 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
   <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
     <form
       onSubmit={handleConfirmBooking}
-      className="bg-gray-800 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"
+      className="bg-gray-900 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"
     >
       <button 
         type="button"
@@ -93,6 +114,13 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
       >
         &times;
       </button>
+       <figure className="pb-1 sm:max-w-xs w-3/4 mx-auto">
+            <img 
+              src={singleRoomDetail.image}
+              alt={singleRoomDetail.title}
+              className="rounded-xl object-cover w-full h-full"
+            />
+          </figure>
       <h3 className="text-xl font-semibold mb-4">Book {singleRoomDetail.title}</h3>
       <p className="text-lg font-bold">Size : {singleRoomDetail.size}</p> <br />
       <p className="text-lg font-bold">Price : {singleRoomDetail.price}</p> <br />
