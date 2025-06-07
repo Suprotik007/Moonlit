@@ -21,7 +21,11 @@ const TopRoomCard = ({ singleRoom }) => {
         <p className="text-gray-700">{singleRoom.short_description}</p> <br />
         <p className="font-semibold">
           Price : <span className="badge bg-gray-600 border-2 text-white">{singleRoom.price}</span>
+        </p> <br />
+        <p className="font-semibold">
+          Total Reviews : <span className="badge bg-gray-600 border-2 text-white">{singleRoom.reviews}</span>
         </p>
+          
         <div className="card-actions justify-end">
           <Link to={`/roomDetails/${singleRoom._id}`}>
             <button className="btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white">

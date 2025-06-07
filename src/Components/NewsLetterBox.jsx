@@ -22,7 +22,7 @@ const NewsLetterBox = () => {
     </label>
     <div className="validator-hint hidden">Enter valid email address</div>
   </div>
-  <button className="btn btn-outline border-2 border-gray-700 hover:bg-black hover:text-white rounded-xl">Join</button>
+  <button className="btn btn-outline border-2 border-gray-700 hover:bg-gray-700 hover:text-white rounded-xl">Join</button>
 </div>
         </div>
     );

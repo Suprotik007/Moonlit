@@ -22,6 +22,9 @@ const AllRoomCard = ({ singleRoom }) => {
         <p className="text-gray-700">{singleRoom.short_description}</p> <br />
         <p className="font-semibold">
           Price : <span className="badge  border-2 border-gray-700 badge-outline">{singleRoom.price}</span>
+        </p> <br />
+        <p className="font-semibold">
+          Total Reviews : <span className="badge  border-2 border-gray-700 badge-outline">{singleRoom.reviews}</span>
         </p> 
         
       </div>
