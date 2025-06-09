@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
-import { BiBook } from 'react-icons/bi';
+
+import { useNavigate } from 'react-router';
+import {useLocation} from 'react-router'
+    
 const RoomDetailsCard = ({ singleRoomDetail }) => {
-  
+  const navigate = useNavigate();
   const {user} =useContext(AuthContext)
     const [bookingDate, setBookingDate] = useState('');
   const [bookingData,setBookingData]=useState(singleRoomDetail.available)
   const[available,setAvailable]=useState(true)
-
+const location=useLocation()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -64,6 +67,15 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
  
   }
 
+  const handleBookNowClick = () => {
+  
+    if (!user) {
+        navigate('/login', { state: { from: location.pathname } });
+      return;
+    }
+    openModal();
+  };
+
   return (
     <div className='my-10'>
   
@@ -86,13 +98,15 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
             </p>
   <p className="text-lg font-bold">Total Reviews : {singleRoomDetail.reviews}</p>
             <div className="card-actions justify-end mt-4">
-              <button
-  disabled={!available}
-  className={`btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white ${!available ? 'bg-gray-900 cursor-not-allowed' : ''}`}
-  onClick={openModal}
->
-  {available ? 'Book Now' : 'Not available'}
-</button>
+           
+         <button
+              disabled={!available}
+              className={`btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white ${!available ? 'bg-gray-900 cursor-not-allowed' : ''}`}
+              onClick={handleBookNowClick}
+            >
+              {available ? 'Book Now' : 'Not available'}
+            </button>
+           
 
             </div>
           </div>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { motion } from "motion/react"
-
+import PrivateRoute from '../provider/PrivateRoute'
 const TopRoomCard = ({ singleRoom }) => {
   return (
     <motion.div
@@ -27,11 +27,13 @@ const TopRoomCard = ({ singleRoom }) => {
         </p>
           
         <div className="card-actions justify-end">
-          <Link to={`/roomDetails/${singleRoom._id}`}>
+          
+            <Link to={`/roomDetails/${singleRoom._id}`}>
             <button className="btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white">
               Book Now
             </button>
           </Link>
+         
         </div>
       </div>
     </motion.div>
