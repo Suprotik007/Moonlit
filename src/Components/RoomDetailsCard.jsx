@@ -20,7 +20,7 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
       const res = await fetch(`http://localhost:3000/bookedRooms/${singleRoomDetail._id}`);
       const data = await res.json();
       if (data.isBooked) {
-        setAvailable(false); // disable button
+        setAvailable(false); 
       }
     } catch (error) {
       console.error('Error checking booking status:', error);
@@ -39,7 +39,7 @@ const RoomDetailsCard = ({ singleRoomDetail }) => {
       ...bookingData,
        roomId: singleRoomDetail._id,
       Name: user?.displayName || '',
-      Email: user?.email || '',
+      email: user?.email || '',
       Title: singleRoomDetail.title,
       Image: singleRoomDetail.image,
       Size: singleRoomDetail.size,

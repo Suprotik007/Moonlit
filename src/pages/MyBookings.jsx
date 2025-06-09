@@ -5,12 +5,12 @@ import { AuthContext } from '../provider/AuthProvider';
 
 const MyBookings = () => {
     const {user} =useContext(AuthContext)
-    //  const [loading, setLoading] = useState(true);
+//     //  const [loading, setLoading] = useState(true);
     const [myBookings,setMyBookings]=useState([])
         useEffect(() => {
   if (user && user.email) { 
      
-    fetch(`http://localhost:3000/bookedRooms?email=${encodeURIComponent(user.email)}`)
+    fetch(`http://localhost:3000/bookedRooms?email=${user.email}`)
       .then(res => res.json())
       .then(data => setMyBookings(data))
       .catch(err => console.error(err));
