@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 const MyBookingsList = ({bookings,onDelete}) => {
 const [deleting,setDeleting]=useState(false)
-
-
+const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const {user} =useContext(AuthContext)
+   const [formData, setFormData] = useState({
+    
+   name :'',
+    description: '',
+    rating: '',
+    date: ''
+    
+  });
    const handleCancel=(_id)=>{
        Swal.fire({
       title: "Are you sure?",
@@ -12,7 +24,7 @@ const [deleting,setDeleting]=useState(false)
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, I am !"
     })
   .then((result)=>{
 if(result.isConfirmed){
@@ -25,16 +37,63 @@ if(result.isConfirmed){
             if (data.deletedCount) {
           //  setDeleting(true)
               Swal.fire({
-                title: "Deleted!",
-                text: "Your Tip has been deleted.",
+                title: "Cancelled!",
+                text: "Your booking has been cancelled.",
                 icon: "success"
                });
                 onDelete(_id)
             }
           })
       }
-    });
+    })
   }
+const handleReview=()=>{ 
+  openModal()
+}
+
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  
+
+const handlePost = (e) => {
+  e.preventDefault();
+  
+  const currentDate = new Date().toISOString().split('T')[0];
+  
+  const reviewData = {
+    ...formData,
+    userName: user?.displayName || '',
+    userEmail: user?.email || '',
+    date: currentDate,
+    roomId: bookings._id 
+  };
+
+  fetch('http://localhost:3000/reviews', { 
+    method: "POST",
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(reviewData)
+  })
+  .then(res => {
+    
+    return res.json();
+  })
+  .then(data => {
+    toast.success('Review posted successfully!'); 
+    setFormData({
+      description: '',
+      rating: ''
+    });
+    closeModal();
+  })
+  
+};
     
     return (
         <div className='mb-5'>
@@ -50,7 +109,7 @@ if(result.isConfirmed){
  <button className='btn lg:hidden sm:block    btn-outline hover:bg-gray-800 hover:text-gray-300  border-2 card-title rounded-full'>Post Review</button>
     </div>
  <div className='flex gap-3 py-8'>
-    <button className='btn text-sm hidden sm:hidden text-green-600 lg:block btn-outline hover:bg-green-600 hover:text-white  border-2 card-title rounded-full'>Post Review</button>
+    <button onClick={()=>handleReview(bookings._id)} className='btn text-sm hidden sm:hidden text-green-600 lg:block btn-outline hover:bg-green-600 hover:text-white  border-2 card-title rounded-full'>Post Review</button>
     <button  onClick={() => handleCancel(bookings._id)} className="btn btn-outline border-2 text-red-600 hover:bg-red-600  hover:text-white rounded-full btn-ghost">
     Cancel Booking</button>
  </div>
@@ -58,6 +117,69 @@ if(result.isConfirmed){
   
   
 </ul>
+{isModalOpen && (
+  <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+    <form
+      onSubmit={handlePost}
+      className="bg-gray-900 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"
+    >
+      <button 
+        type="button"
+        className="absolute top-2 right-2 text-gray-200 hover:text-amber-300 text-2xl font-bold"
+        onClick={closeModal}
+        aria-label="Close modal"
+      >
+        &times;
+      </button>
+
+   {/* reviewData */}
+      <h3 className="text-xl font-semibold mb-4">Write a review </h3>
+   {/* name */}
+<div className='flex items-center card-title'>
+  <label className=" mb-1">Name :</label>
+  <p className="ml-2 mb-1">{user?.displayName || ''}</p>
+</div>
+{/* rating */}
+<label className="gap-5 card-title mb-2">
+  <span className="">Rating : </span>
+  <select  name="rating" 
+    value={formData.rating}
+    onChange={handleChange} 
+    className='bg-gray-300 rounded-full text-black'>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    
+  </select>
+</label>
+{/* comment */}
+         <div>
+ <textarea
+            id="description"
+            name="description"
+            rows="5"
+            placeholder="Write your review..."
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full border-2 border-gray-400 rounded px-3 py-2 "
+            required
+          />
+        </div>
+  {/* date */}
+        <div type='date' id='date' name='date' value={formData.date} className='card-title '>
+         Date :  {new Date().getDate()}/{new Date().getMonth()}/{new Date().getFullYear()}
+          </div>
+      <button 
+        type='submit'
+        className="btn btn-outline border-2 mt-5 rounded-4xl"
+      >
+        Post
+      </button>
+    </form>
+  </div>
+)}
         </div>
     );
 };
