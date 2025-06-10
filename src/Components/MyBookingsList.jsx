@@ -5,8 +5,16 @@ import { toast } from 'react-toastify';
 const MyBookingsList = ({bookings,onDelete}) => {
 const [deleting,setDeleting]=useState(false)
 const [isModalOpen, setIsModalOpen] = useState(false);
+
+// const[calender,setCalender]=useState()
+const[isCalenderOpen,setIsCalenderOpen]=useState(false)
+const openCalender=()=>setIsCalenderOpen(true)
+const closeCalender=()=>setIsCalenderOpen(false)
+
+const[newDate, setNewDate]=useState()
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
   const {user} =useContext(AuthContext)
    const [formData, setFormData] = useState({
     
@@ -16,6 +24,10 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     date: '',
     roomId:''
   });
+  const [formData2,setFormData2]=useState({
+    newDate:''
+  })
+
    const handleCancel=(_id)=>{
        Swal.fire({
       title: "Are you sure?",
@@ -97,7 +109,37 @@ title:bookings.title,
   })
   
 };
-    
+   const handleUpdateDate=(e)=>{
+e.preventDefault()
+openCalender()
+
+    }
+
+   const handleSetDate = (e) => {
+  e.preventDefault();
+
+  // const newDate = { date: formData.date };
+
+  fetch(`http://localhost:3000/bookedRooms/${bookings._id}`, {
+    method: "PATCH",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({newDate:formData.date})
+  })
+    .then(res => res.json())
+    .then(data => {
+      
+        toast.success('Date updated!');
+        
+        setFormData(prev => ({ ...prev, date: '' }));
+        closeCalender();
+      
+    })
+    .catch(() => toast.error('Error updating date.'));
+};
+
+  
     return (
         <div className='mb-5'>
           <ul className="list border-2 border-gray-800  rounded-box shadow-lg">
@@ -107,7 +149,9 @@ title:bookings.title,
     <div>
       <div className='card-title text-gray-800 text-2xl'>{bookings.title}</div>
       <br />
-      <div className="text-sm card-title uppercase font-semibold text-gray-600">Booked For : {bookings.Booked_For}      <button className=' badge badge-outline  border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300'>Update Date</button></div>
+      <div className="text-sm card-title uppercase font-semibold text-gray-600">Booked For : {bookings.Booked_For}   
+
+           <button onClick={handleUpdateDate} className=' badge badge-outline  border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300'>Update Date</button></div>
       <br />
  <button className='btn lg:hidden sm:block    btn-outline hover:bg-gray-800 hover:text-gray-300  border-2 card-title rounded-full'>Post Review</button>
     </div>
@@ -183,7 +227,33 @@ title:bookings.title,
     </form>
   </div>
 )}
+
+{/*calender  */}
+{isCalenderOpen && (
+  <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+    <form className="bg-gray-900 p-7 rounded-xl w-11/12 max-w-md shadow-lg relative">
+      <button onClick={closeCalender} className="absolute top-2 right-2 text-gray-200 text-2xl">&times;</button>
+      <h3 className="text-xl font-semibold mb-4">Update Date</h3>
+      <input
+        type="datetime-local"
+        value={formData.date}
+        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+        className="input"
+      />
+      <button 
+      onClick={handleSetDate}
+        type='submit'
+        className="btn btn-outline border-2 text-white hover:text-black mt-5 rounded-4xl"
+      >
+        Set date
+      </button>
+    </form>
+  </div>
+)}
+
+
         </div>
+        
     );
 };
 
