@@ -17,6 +17,16 @@ const location=useLocation()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+   const [reviewCount, setReviewCount] = useState();
+    useEffect(() => {
+    fetch(`http://localhost:3000/reviews/${singleRoomDetail.title}`)
+      .then(res => res.json())
+      // .then(data => console.log(data.total))
+      .then(data => setReviewCount(data.total))
+  
+  }, [singleRoomDetail.title]);
+  
+  
   useEffect(() => {
   const checkIfRoomBooked = async () => {
     try {
@@ -43,7 +53,7 @@ const location=useLocation()
        roomId: singleRoomDetail._id,
       Name: user?.displayName || '',
       email: user?.email || '',
-      Title: singleRoomDetail.title,
+      title: singleRoomDetail.title,
       Image: singleRoomDetail.image,
       Size: singleRoomDetail.size,
       Price: singleRoomDetail.price,
@@ -96,7 +106,7 @@ const location=useLocation()
             <p className="text-lg font-bold">
               Facilities : <span className='font-bold text-fuchsia-600'>{singleRoomDetail.facilities.join(', ')}</span>
             </p>
-  <p className="text-lg font-bold">Total Reviews : {singleRoomDetail.reviews}</p>
+  <p className="text-lg font-bold">Total Reviews : {reviewCount}</p>
             <div className="card-actions justify-end mt-4">
            
          <button

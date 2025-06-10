@@ -1,12 +1,21 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from "motion/react"
 import PrivateRoute from '../provider/PrivateRoute'
 const TopRoomCard = ({ singleRoom }) => {
+   const [reviewCount, setReviewCount] = useState();
+    useEffect(() => {
+    fetch(`http://localhost:3000/reviews/${singleRoom.title}`)
+      .then(res => res.json())
+      // .then(data => console.log(data.total))
+      .then(data => setReviewCount(data.total))
+  
+  }, [singleRoom.title]);
+  
   return (
     <motion.div
-      className="rounded-2xl text-left bg-base-200 m-5 border-2 shadow-lg"
+      className="rounded-2xl text-left bg-base-00 m-5 border-2 shadow-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{rotate:360,  opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -23,7 +32,7 @@ const TopRoomCard = ({ singleRoom }) => {
           Price : <span className="badge bg-gray-600 border-2 text-white">{singleRoom.price}</span>
         </p> <br />
         <p className="font-semibold">
-          Total Reviews : <span className="badge bg-gray-600 border-2 text-white">{singleRoom.reviews}</span>
+          Total Reviews :<span className="badge bg-gray-600 border-2 text-white">{reviewCount}</span>
         </p>
           
         <div className="card-actions justify-end">

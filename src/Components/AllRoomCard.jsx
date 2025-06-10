@@ -1,9 +1,18 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from "motion/react"
 
 const AllRoomCard = ({ singleRoom }) => {
+   const [reviewCount, setReviewCount] = useState();
+  useEffect(() => {
+  fetch(`http://localhost:3000/reviews/${singleRoom.title}`)
+    .then(res => res.json())
+    // .then(data => console.log(data.total))
+    .then(data => setReviewCount(data.total))
+
+}, [singleRoom.title]);
+
   return (
    <Link to={`/roomDetails/${singleRoom._id}`}>
     <motion.div
@@ -24,7 +33,7 @@ const AllRoomCard = ({ singleRoom }) => {
           Price : <span className="badge  border-2 border-gray-700 badge-outline">{singleRoom.price}</span>
         </p> <br />
         <p className="font-semibold">
-          Total Reviews : <span className="badge  border-2 border-gray-700 badge-outline">{singleRoom.reviews}</span>
+          Total Reviews : <span className="badge  border-2 border-gray-700 badge-outline">{reviewCount}</span>
         </p> 
         
       </div>

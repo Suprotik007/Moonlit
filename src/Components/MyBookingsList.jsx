@@ -13,8 +13,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
    name :'',
     description: '',
     rating: '',
-    date: ''
-    
+    date: '',
+    roomId:''
   });
    const handleCancel=(_id)=>{
        Swal.fire({
@@ -63,14 +63,16 @@ const handleChange = (e) => {
 const handlePost = (e) => {
   e.preventDefault();
   
-  const currentDate = new Date().toISOString().split('T')[0];
-  
+ 
   const reviewData = {
-    ...formData,
+  
+title:bookings.title,
+    description: formData.description,
+    rating: formData.rating,
     userName: user?.displayName || '',
     userEmail: user?.email || '',
-    date: currentDate,
-    roomId: bookings._id 
+    roomId: bookings._id,
+    date:formData.date
   };
 
   fetch('http://localhost:3000/reviews', { 
@@ -88,7 +90,8 @@ const handlePost = (e) => {
     toast.success('Review posted successfully!'); 
     setFormData({
       description: '',
-      rating: ''
+      rating: '',
+      roomId:''
     });
     closeModal();
   })
@@ -102,7 +105,7 @@ const handlePost = (e) => {
   <li className=" list-row ">
     <div><img className="w-50 rounded-box" src={bookings.Image}/></div>
     <div>
-      <div className='card-title text-gray-800 text-2xl'>{bookings.Title}</div>
+      <div className='card-title text-gray-800 text-2xl'>{bookings.title}</div>
       <br />
       <div className="text-sm card-title uppercase font-semibold text-gray-600">Booked For : {bookings.Booked_For}      <button className=' badge badge-outline  border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300'>Update Date</button></div>
       <br />
@@ -133,7 +136,7 @@ const handlePost = (e) => {
       </button>
 
    {/* reviewData */}
-      <h3 className="text-xl font-semibold mb-4">Write a review </h3>
+      <h3 className="text-xl font-semibold mb-4">{bookings.title}</h3>
    {/* name */}
 <div className='flex items-center card-title'>
   <label className=" mb-1">Name :</label>
