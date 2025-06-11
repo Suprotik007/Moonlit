@@ -10,19 +10,23 @@ import {useLocation} from 'react-router'
 const RoomDetailsCard = ({ singleRoomDetail }) => {
   const navigate = useNavigate();
   const {user} =useContext(AuthContext)
+
     const [bookingDate, setBookingDate] = useState('');
   const [bookingData,setBookingData]=useState(singleRoomDetail.available)
+
   const[available,setAvailable]=useState(true)
 const location=useLocation()
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-   const [reviewCount, setReviewCount] = useState();
+
+   const [reviews, setReviews] = useState([]);
     useEffect(() => {
     fetch(`http://localhost:3000/reviews/${singleRoomDetail.title}`)
       .then(res => res.json())
-      // .then(data => console.log(data.total))
-      .then(data => setReviewCount(data.total))
+      .then(data => setReviews(data.reviews || []))
+      
   
   }, [singleRoomDetail.title]);
   
@@ -106,7 +110,23 @@ const location=useLocation()
             <p className="text-lg font-bold">
               Facilities : <span className='font-bold text-fuchsia-600'>{singleRoomDetail.facilities.join(', ')}</span>
             </p>
-  <p className="text-lg font-bold">Total Reviews : {reviewCount}</p>
+  {/* <p className="text-lg font-bold">Reviews : {reviews}</p>
+   */}
+   <p className="text-lg font-bold">Reviews:</p>
+<div >
+  <ul>
+  {reviews.length === 0 && <li>No reviews yet.</li>}
+  {reviews.map((review) => (
+    <li key={review._id} className="mb-2 border-2 rounded-full font-bold border-gray-600 p-2">
+      <span className="font-bold ">{review.userName}:</span> {review.description} ||
+      
+      <span className="ml-2 font-bold text-blue-600">Rating: {review.rating}</span> 
+      {/* <span className="ml-2 text-gray-500 text-sm">{new Date(review.date).toLocaleString()}</span>  */}
+    </li>
+  ))}
+</ul>
+</div>
+
             <div className="card-actions justify-end mt-4">
            
          <button
