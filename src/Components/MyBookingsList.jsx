@@ -74,7 +74,7 @@ const handleChange = (e) => {
 
 const handlePost = (e) => {
   e.preventDefault();
-  
+  const dateNew =  new Date().toISOString().split('T')[0]
  
   const reviewData = {
   
@@ -84,7 +84,8 @@ title:bookings.title,
     userName: user?.displayName || '',
     userEmail: user?.email || '',
     roomId: bookings._id,
-    date:formData.date
+    // date:formData.date
+    date:dateNew
   };
 
   fetch('http://localhost:3000/reviews', { 
@@ -117,15 +118,16 @@ openCalender()
 
    const handleSetDate = (e) => {
   e.preventDefault();
-
-  // const newDate = { date: formData.date };
+const dateOnly = formData.date.split('T')[0];
+  
 
   fetch(`http://localhost:3000/bookedRooms/${bookings._id}`, {
     method: "PATCH",
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({newDate:formData.date})
+    
+    body: JSON.stringify({ newDate: dateOnly })
   })
     .then(res => res.json())
     .then(data => {

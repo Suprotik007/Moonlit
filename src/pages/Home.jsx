@@ -31,7 +31,7 @@ fetch ('http://localhost:3000/specialOffers')
             <NewsLetterContainer></NewsLetterContainer>
             <Stats></Stats>
            </div>
-           {showModal && (
+           {/* {showModal && (
   <div className="fixed inset-0  bg-opacity-70 flex justify-center items-center z-50 p-4">
     <div className="relative max-w-lg w-full rounded-lg overflow-hidden shadow-lg">
       <button
@@ -43,7 +43,7 @@ fetch ('http://localhost:3000/specialOffers')
       </button>
 
       {offers.map(offer => (
-        <div key={offer.id} className="relative">
+        <div key={offer._id} className="relative">
           <img
             src={offer.image}
         
@@ -62,7 +62,7 @@ fetch ('http://localhost:3000/specialOffers')
       ))}
     </div>
   </div>
-)}
+)} */}
 
         </div>
     );

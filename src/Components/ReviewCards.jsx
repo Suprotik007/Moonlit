@@ -1,30 +1,51 @@
-// import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const ReviewCards = ({bookings}) => {
-  // const[showReview,setShowReview]=useState()
-  // useEffect(()=>{
-  //   fetch(`http://localhost:3000/reviews/${bookings.id}`)
-  //   .then(res=>res.json())
-  //   .then(data=>setShowReview(data)
-  //   )
-  // },[bookings.id])
-    return (
-        <div>
-            <div className="carousel carousel-center border-2 border-gray-700 rounded-box max-w-md space-x-4 p-2">
-  <div className="carousel-item">
-<div className=" bg-base-300 w-96 shadow-sm">
- <h1></h1>
-  <div className="card-body items-center text-center">
-    <h2 className="card-title"></h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    
-  </div>
-</div>
-  </div>
+const ReviewCards = ({ reviews }) => {
+  
+  return (
+    <div className="carousel  w-full max-w-4xl mx-auto">
+      {reviews.map((review, index) => (
+        <div
+          key={review._id || index}
+          id={`slide${index}`}
+          className="carousel-item relative w-full p-4"
+        >
+       <div className="rounded-xl p-3 border-3 border-gray-600 border-dashed mx-auto  shadow-lg">
  
+  <div className="card-body ">
+    <h2 className="card-title text-3xl">
+      {review.title}
+      
+    </h2>
+
+    <div className="badge bg-gray-700 text-lg p-3 text-white">{review.userName}</div>
+    <p className='text-gray-700'>{review.description}</p>
+    <div className="card-actions justify-end">
+      <div className="badge bg-gray-700 text-white badge-outline">Rating : {review.rating}/5</div>
+      <div className="badge bg-gray-700 text-white badge-outline">{review.date}</div>
+    </div>
+  </div>
 </div>
+
+          {/* Navigation arrows */}
+          <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a
+              href={`#slide${(index - 1 + reviews.length) % reviews.length}`}
+              className="btn btn-circle"
+            >
+              ❮
+            </a>
+            <a
+              href={`#slide${(index + 1) % reviews.length}`}
+              className="btn btn-circle"
+            >
+              ❯
+            </a>
+          </div>
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default ReviewCards;

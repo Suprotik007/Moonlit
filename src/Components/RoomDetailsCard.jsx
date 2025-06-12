@@ -50,6 +50,7 @@ const location=useLocation()
 
   const handleConfirmBooking=(e)=>{
         e.preventDefault()
+        const dateOnly = bookingDate.split('T')[0];
     // toast.success('Booking confirmed!')
                 closeModal();
  const confirmedBookingData = {
@@ -61,7 +62,7 @@ const location=useLocation()
       Image: singleRoomDetail.image,
       Size: singleRoomDetail.size,
       Price: singleRoomDetail.price,
-      Booked_For:bookingDate
+      Booked_For:dateOnly
     
     };
 
