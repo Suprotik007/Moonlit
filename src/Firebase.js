@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCGXB3s9I2cFJ6naDZwtBJ8amYvJlDOADM",
-  authDomain: "cozy-rooms.firebaseapp.com",
-  projectId: "cozy-rooms",
-  storageBucket: "cozy-rooms.firebasestorage.app",
-  messagingSenderId: "316896949870",
-  appId: "1:316896949870:web:40fb21f39cf0339afd587f"
+   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

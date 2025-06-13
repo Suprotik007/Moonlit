@@ -6,7 +6,7 @@ const RoomDetails = () => {
     const { _id } = useParams(); 
     const [roomDetails,setRoomDetails]=useState([])
     useEffect(()=>{
-        fetch(`http://localhost:3000/allRooms/${_id}`)
+        fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/allRooms/${_id}`)
         .then(res=>res.json())
         .then(data=>setRoomDetails([data]))
         

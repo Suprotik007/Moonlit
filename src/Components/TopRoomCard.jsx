@@ -6,7 +6,7 @@ import PrivateRoute from '../provider/PrivateRoute'
 const TopRoomCard = ({ singleRoom }) => {
    const [reviewCount, setReviewCount] = useState();
     useEffect(() => {
-    fetch(`http://localhost:3000/reviews/${singleRoom.title}`)
+    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews/${singleRoom.title}`)
       .then(res => res.json())
       // .then(data => console.log(data.total))
       .then(data => setReviewCount(data.total))

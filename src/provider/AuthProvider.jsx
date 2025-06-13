@@ -8,7 +8,17 @@ const auth = getAuth(app)
 const AuthProvider = ({children}) => {
     const[user,setUser]=useState(null)
     const [loading,setLoading]=useState(true)
-// console.log(user);
+const [token, setToken] = useState(null);
+
+
+const refreshToken = async () => {
+        if (auth.currentUser) {
+            const newToken = await auth.currentUser.getIdToken(true);
+            setToken(newToken);
+            return newToken;
+        }
+        return null;
+    };
 
     const createUser=(email,password)=>{
         setLoading(true)
@@ -23,22 +33,23 @@ const updateUser=(updatedData)=>{
     return updateProfile(auth.currentUser,updatedData)
 }
 
-
 const logOut=()=>{
     return signOut(auth)
 }
 
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            setUser(currentUser);
+            if (currentUser) {
+                const token = await currentUser.getIdToken();
+                setToken(token);
+            }
+            setLoading(false);
+        });
+        return unsubscribe;
+    }, []);
 
 
-    useEffect(()=>{
-const unsubscribe=onAuthStateChanged(auth,(currentUser)=>{
-    setUser(currentUser)
-    setLoading(false)
-})
-return()=>{
-    unsubscribe()
-}
-    },[])
     const authData={
         user,
         setUser,
@@ -48,6 +59,8 @@ return()=>{
         loading,
         setLoading,
         updateUser,
+        token,
+        refreshToken
     }
     return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
         

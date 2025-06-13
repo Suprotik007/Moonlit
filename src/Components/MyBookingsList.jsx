@@ -18,6 +18,8 @@ const[newDate, setNewDate]=useState()
   const closeModal = () => setIsModalOpen(false);
 
   const {user} =useContext(AuthContext)
+  
+  
    const [formData, setFormData] = useState({
     
    name :'',
@@ -69,7 +71,7 @@ return today.isSameOrBefore(finalDate)
   .then((result)=>{
 if(result.isConfirmed){
   setDeleting(true)
-   fetch(`http://localhost:3000/bookedRooms/${_id}`, {
+   fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${_id}`, {
           method: 'DELETE',
         })
         .then(res => res.json())
@@ -116,7 +118,7 @@ title:bookings.title,
     date:dateNew
   };
 
-  fetch('http://localhost:3000/reviews', { 
+  fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews', { 
     method: "POST",
     headers: { 
       'Content-Type': 'application/json'
@@ -140,9 +142,7 @@ title:bookings.title,
 };
    const handleUpdateDate=(e)=>{
 e.preventDefault()
-
 openCalender()
-
     }
 
    const handleSetDate = (e) => {
@@ -158,7 +158,7 @@ if (!canUpdateDate(dateOnly)) {
   }
   
 
-  fetch(`http://localhost:3000/bookedRooms/${bookings._id}`, {
+  fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${bookings._id}`, {
     method: "PATCH",
     headers: {
       'Content-Type': 'application/json'

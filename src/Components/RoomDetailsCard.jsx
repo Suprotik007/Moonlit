@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router';
 import {useLocation} from 'react-router'
+import moment from 'moment';
+import Swal from 'sweetalert2';
     
 const RoomDetailsCard = ({ singleRoomDetail }) => {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const location=useLocation()
 
    const [reviews, setReviews] = useState([]);
     useEffect(() => {
-    fetch(`http://localhost:3000/reviews/${singleRoomDetail.title}`)
+    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews/${singleRoomDetail.title}`)
       .then(res => res.json())
       .then(data => setReviews(data.reviews || []))
       
@@ -47,11 +49,26 @@ const location=useLocation()
   checkIfRoomBooked();
 }, [singleRoomDetail._id]);
 
+function canBookDate(canBookDate) {
+  const bookingDate = moment(canBookDate, 'YYYY-MM-DD').startOf('day');
+  const today = moment().startOf('day');
+  
+  return bookingDate.isSameOrAfter(today);
+}
 
   const handleConfirmBooking=(e)=>{
         e.preventDefault()
         const dateOnly = bookingDate.split('T')[0];
-    // toast.success('Booking confirmed!')
+    
+        if (!canBookDate(dateOnly)) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Booking Not Allowed',
+              text: 'You can not time travel to past.Please check the date',
+            });
+            return;
+          }
+
                 closeModal();
  const confirmedBookingData = {
       ...bookingData,
@@ -66,7 +83,7 @@ const location=useLocation()
     
     };
 
-    fetch(`http://localhost:3000/bookedRooms/${singleRoomDetail._id}`,{
+    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${singleRoomDetail._id}`,{
         method:"POST",
         headers:{ 
             'Content-Type':'application/json'
@@ -75,7 +92,7 @@ const location=useLocation()
     })
         .then(res=>res.json())
     .then(data=>
-      console.log('after adding data to db',data))
+      console.log('adding data to db'))
     // console.log('Submitting booking:', confirmedBookingData);
        setAvailable(false)
     toast.success('Booked successfully!')

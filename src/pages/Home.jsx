@@ -13,7 +13,7 @@ const Home = () => {
 const [showModal, setShowModal] = useState(false)
 
 useEffect(()=>{
-fetch ('http://localhost:3000/specialOffers')
+fetch ('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/specialOffers')
 .then(res=>res.json())
 .then(data=>{setOffers(data)
     setShowModal(true)
