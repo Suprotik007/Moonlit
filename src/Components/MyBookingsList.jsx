@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import moment from 'moment/moment';
+
 const MyBookingsList = ({bookings,onDelete}) => {
 const [deleting,setDeleting]=useState(false)
 const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,11 +26,37 @@ const[newDate, setNewDate]=useState()
     date: '',
     roomId:''
   });
-  const [formData2,setFormData2]=useState({
-    newDate:''
-  })
+  // const [formData2,setFormData2]=useState({
+  //   newDate:''
+  // })
+  const cancellationDeadline=(bookedDate)=> {
+const bookingDate=moment(bookedDate,'YYYY-MM-DD')
+const finalDate=bookingDate.clone().subtract(3,'days')
+const today=moment().startOf('day')
+
+return today.isSameOrBefore(finalDate)
+
+  }
+
+  function canUpdateDate(updatedDate) {
+  const bookingDate = moment(updatedDate, 'YYYY-MM-DD').startOf('day');
+  const today = moment().startOf('day');
+  
+  return bookingDate.isSameOrAfter(today);
+}
+
+
 
    const handleCancel=(_id)=>{
+  if (!cancellationDeadline(bookings.Booked_For)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Cancellation Not Allowed',
+      text: 'You can only cancel up to 2 days before the booking date.',
+    });
+    return;
+  }
+
        Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to undo this!",
@@ -112,6 +140,7 @@ title:bookings.title,
 };
    const handleUpdateDate=(e)=>{
 e.preventDefault()
+
 openCalender()
 
     }
@@ -119,6 +148,14 @@ openCalender()
    const handleSetDate = (e) => {
   e.preventDefault();
 const dateOnly = formData.date.split('T')[0];
+if (!canUpdateDate(dateOnly)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Booking Not Allowed',
+      text: 'You can not time travel to past.Please check the date',
+    });
+    return;
+  }
   
 
   fetch(`http://localhost:3000/bookedRooms/${bookings._id}`, {
@@ -131,40 +168,77 @@ const dateOnly = formData.date.split('T')[0];
   })
     .then(res => res.json())
     .then(data => {
-      
-        toast.success('Date updated!');
-        
+        toast.success('Date updated!'); 
         setFormData(prev => ({ ...prev, date: '' }));
         closeCalender();
       
     })
-    .catch(() => toast.error('Error updating date.'));
+
 };
 
   
     return (
         <div className='mb-5'>
-          <ul className="list border-2 border-gray-800  rounded-box shadow-lg">
-
-  <li className=" list-row ">
-    <div><img className="w-50 rounded-box" src={bookings.Image}/></div>
-    <div>
-      <div className='card-title text-gray-800 text-2xl'>{bookings.title}</div>
-      <br />
-      <div className="text-sm card-title uppercase font-semibold text-gray-600">Booked For : {bookings.Booked_For}   
-
-           <button onClick={handleUpdateDate} className=' badge badge-outline  border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300'>Update Date</button></div>
-      <br />
- <button className='btn lg:hidden sm:block    btn-outline hover:bg-gray-800 hover:text-gray-300  border-2 card-title rounded-full'>Post Review</button>
+         
+     <ul className="list border-2 border-gray-800 rounded-box shadow-lg">
+  <li className="list-row flex flex-col sm:flex-row gap-4 p-4">
+    
+    <div className="w-full sm:w-auto">
+      <img 
+        className="w-full sm:w-50 rounded-box" 
+        src={bookings.Image} 
+        alt={bookings.title} 
+      />
     </div>
- <div className='flex gap-3 py-8'>
-    <button onClick={()=>handleReview(bookings._id)} className='btn text-sm hidden sm:hidden text-green-600 lg:block btn-outline hover:bg-green-600 hover:text-white  border-2 card-title rounded-full'>Post Review</button>
-    <button  onClick={() => handleCancel(bookings._id)} className="btn btn-outline border-2 text-red-600 hover:bg-red-600  hover:text-white rounded-full btn-ghost">
-    Cancel Booking</button>
- </div>
+
+    <div className="flex-1">
+      <div className="card-title mb-5 text-gray-800 text-xl sm:text-2xl">
+        {bookings.title}
+      </div>
+      
+      <div className="text-sm card-title uppercase font-semibold text-gray-600 mt-2 sm:mt-0">
+        Booked For: {bookings.Booked_For}
+        <button 
+          onClick={handleUpdateDate} 
+          className="badge badge-outline border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300 ml-2"
+        >
+          Update Date
+        </button>
+      </div>
+
+    
+      <div className="flex flex-wrap gap-2 mt-4 sm:hidden">
+        <button 
+          onClick={() => handleReview(bookings._id)} 
+          className="btn btn-outline text-green-700 hover:bg-green-700 hover:text-gray-300 border-2 rounded-full text-sm"
+        >
+          Post Review
+        </button>
+        <button 
+          onClick={() => handleCancel(bookings._id)} 
+          className="btn btn-outline border-2 text-red-600 hover:bg-red-600 hover:text-white rounded-full text-sm"
+        >
+          Cancel Booking
+        </button>
+      </div>
+    </div>
+
+    
+    <div className="hidden sm:flex gap-3 items-center">
+      <button 
+        onClick={() => handleReview(bookings._id)} 
+        className="btn btn-outline text-green-700 hover:bg-green-600 hover:text-white border-2 rounded-full text-sm"
+      >
+        Post Review
+      </button>
+      <button 
+        onClick={() => handleCancel(bookings._id)} 
+        className="btn btn-outline border-2 text-red-600 hover:bg-red-600 hover:text-white rounded-full text-sm"
+      >
+        Cancel Booking
+      </button>
+    </div>
   </li>
-  
-  
 </ul>
 {isModalOpen && (
   <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
@@ -260,3 +334,10 @@ const dateOnly = formData.date.split('T')[0];
 };
 
 export default MyBookingsList;
+
+
+
+
+
+
+    

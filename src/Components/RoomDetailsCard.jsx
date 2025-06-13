@@ -111,18 +111,18 @@ const location=useLocation()
             <p className="text-lg font-bold">
               Facilities : <span className='font-bold text-fuchsia-600'>{singleRoomDetail.facilities.join(', ')}</span>
             </p>
-  {/* <p className="text-lg font-bold">Reviews : {reviews}</p>
-   */}
+  
+   
    <p className="text-lg font-bold">Reviews:</p>
 <div >
   <ul>
   {reviews.length === 0 && <li>No reviews yet.</li>}
   {reviews.map((review) => (
-    <li key={review._id} className="mb-2 border-2 rounded-full font-bold border-gray-600 p-2">
-      <span className="font-bold ">{review.userName}:</span> {review.description} ||
+    <li key={review._id} className="mb-2 border-2 rounded-xl font-bold border-gray-600 p-2">
+      <span className="font-bold text-amber-800 ">{review.userName}:</span> {review.description} ||
       
       <span className="ml-2 font-bold text-blue-600">Rating: {review.rating}</span> 
-      {/* <span className="ml-2 text-gray-500 text-sm">{new Date(review.date).toLocaleString()}</span>  */}
+    
     </li>
   ))}
 </ul>
@@ -166,7 +166,7 @@ const location=useLocation()
               className="rounded-xl object-cover w-full h-full"
             />
           </figure>
-      <h3 className="text-xl font-semibold mb-4">Book {singleRoomDetail.title}</h3>
+      <h3 className="text-xl  font-semibold mb-4">{singleRoomDetail.title}</h3>
       <p className="text-lg font-bold">Size : {singleRoomDetail.size}</p> <br />
       <p className="text-lg font-bold">Price : {singleRoomDetail.price}</p> <br />
       <p className="text-lg font-bold">
