@@ -108,14 +108,14 @@ Timestamp
 
 ## Tech Stack & NPM Packages
 
-# Frontend	React, React Router DOM, Framer Motion
-# Backend	Express.js, MongoDB, JWT
-# Auth	Firebase Auth (Email/Password + OAuth)
-# Maps	React-Leaflet
-# Notifications	React-Toastify / SweetAlert2
-# Forms & Validation	Custom + Firebase validation
-# Dates	Moment.js
-# HTTP Requests	Axios
+### Frontend	React, React Router DOM, Framer Motion
+### Backend	Express.js, MongoDB, JWT
+### Auth	Firebase Auth (Email/Password + OAuth)
+### Maps	React-Leaflet
+### Notifications	React-Toastify / SweetAlert2
+### Forms & Validation	Custom + Firebase validation
+### Dates	Moment.js
+### HTTP Requests	Axios
 
 
 ## Security
