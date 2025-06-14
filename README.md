@@ -1,127 +1,128 @@
-Moonlit
-A modern, fully responsive hotel booking platform designed to provide users with a seamless and engaging experience for discovering and booking hotel rooms. The platform combines interactive design, robust functionality, and secure authentication to ensure an enjoyable and trustworthy experience for all users.
+🏨 Hotel Booking Platform
+A modern, fully responsive hotel booking platform that provides users with a seamless, intuitive experience for discovering and booking hotel rooms. This project merges interactive design, robust backend functionality, and secure user authentication to create an engaging and trustworthy environment across all devices.
 
-Project Purpose
-This project aims to deliver a visually appealing, recruiter-friendly hotel booking website that allows users to:
+🔗 Live Demo: [Add your deployed project link here]
 
-Discover and filter hotel rooms
+✨ Features at a Glance
+🔍 Search & Filter hotel rooms easily
 
-Book and manage reservations
+🗓️ Book & manage reservations with ease
 
-Post and view authentic user reviews
+⭐ Post & view verified user reviews
 
-Benefit from special offers and promotions
+💸 Get access to exclusive deals & promotions
 
-Enjoy a secure and intuitive user experience across all devices
+🔐 Secure & intuitive user experience with JWT auth
 
-Live URL
-Clinet : [ https://moolit.netlify.app/ ]
-Server : [ https://cozy-room-server.vercel.app/ ]
+📱 Fully responsive design across devices
 
-Key Features
-Homepage Design
+🏁 Project Purpose
+This project was developed to demonstrate:
 
-Interactive banner with slider, heading, description, and CTA button
+Professional UI/UX design with React
 
-Map integration showing hotel location (using react-leaflet)
+Authentication via Firebase & secure routes
 
-Featured rooms section with top-rated rooms and “Book Now” buttons
+Real-world booking logic and user review systems
 
-User reviews carousel, sorted by latest
+Recruiter-ready full-stack implementation
 
-Two extra attractive sections (e.g., amenities, partners)
+🖼 Homepage
+🎯 Interactive hero section with slider, heading, and CTA
 
-Popup/modal for special offers and promotions
+🗺️ Hotel location map using react-leaflet
 
-User Authentication
+🌟 Featured rooms with “Book Now” actions
 
-Email/password registration and login with validation
+💬 Reviews carousel (latest first)
 
-Social login (Google)
+🧾 Additional sections: Amenities & Trusted Partners
 
-Secure JWT authentication for protected routes
+🎁 Special offers popup/modal
 
-Toast/sweet alert notifications for actions
+🔐 Authentication & Security
+🔑 Email/password registration with strong validation (upper, lower, 6+ chars)
 
-Navigation Bar
+☁️ Social login via Google or GitHub
 
-Links to Rooms, My Bookings, and authentication pages
+🛡️ JWT-based auth for protecting user routes
 
-My Bookings accessible only to authenticated users
+🔔 Toast / SweetAlert2 notifications for all user actions
 
-Rooms Page
+🧭 Navigation
+🔗 Easy access to: Rooms, My Bookings, and Login/Register
 
-Displays all rooms from the database in card/table format
+👤 My Bookings only visible to authenticated users
 
-Server-side filtering by price range
+🏘 Rooms Page
+📋 Displays all rooms in cards or table format
 
-Clickable cards redirect to room details
+💰 Filter rooms by price range (server-side)
 
-Room Details Page
+🖱️ Clickable cards redirect to detailed room pages
 
-Comprehensive room info, list of reviews, and booking button
+🛏 Room Details Page
+📝 Room description, image gallery, and list of user reviews
 
-Booking modal with date picker, room summary, and confirm action
+✅ Booking modal with room summary and date picker
 
-Only available rooms can be booked; booked rooms become unavailable
+❌ Booked rooms become unavailable automatically
 
-My Bookings Page
+📅 My Bookings Page
+🧾 View current user’s bookings in a responsive table
 
-Shows current user’s bookings in a table
+🔄 Update or cancel bookings (restrictions apply)
 
-Cancel booking (with 1-day-before restriction; uses Moment.js for date comparison)
+Cancellations allowed only 1+ days in advance
 
-Update booking date
+✍️ Post reviews for booked rooms only
 
-Post reviews for booked rooms only
+⭐ Review System
+🗣 Users can post reviews only for rooms they've booked
 
-Review System
+📊 Reviews include:
 
-Users can review only rooms they have booked
+Username (auto-filled)
 
-Reviews include username (read-only), rating (1-5), comment, and timestamp
+1–5 star rating
 
-Reviews displayed on room details and homepage (latest first)
+Comment
 
-Access Control
+Timestamp
 
-Non-logged-in users cannot book or review rooms
+📍 Displayed on room details and homepage (latest first)
 
-Private routes protected by JWT
+🧭 Access Control
+❌ Non-logged-in users cannot book or leave reviews
 
-404 Page
+🔐 JWT tokens stored securely and used for all protected API requests
 
-Custom error page with engaging image/gif and “Back to Home” button
+❌ Custom 404 Page
+🚫 Friendly error screen with engaging image/GIF and a “Back to Home” button
 
-Responsive Design
+📱 Responsive Design
+✅ Mobile-first layout
 
-Mobile, tablet, and desktop friendly
+🧠 Clean alignment, spacing, and color contrast
 
-Pleasing color contrast, proper alignment, and spacing
+👀 Modern UI/UX to impress recruiters (no “gobindo” designs)
 
-Clean, recruiter-attractive UI (no “gobindo” design)
+🧰 Tech Stack & NPM Packages
+Area	Technology
+Frontend	React, React Router DOM, Framer Motion
+Backend	Express.js, MongoDB, JWT
+Auth	Firebase Auth (Email/Password + OAuth)
+Maps	React-Leaflet
+Notifications	React-Toastify / SweetAlert2
+Forms & Validation	Custom + Firebase validation
+Dates	Moment.js
+HTTP Requests	Axios
+SEO	react-helmet-async
+Config	dotenv
 
-NPM Packages Used
-react-router-dom – Routing
+🔒 Security
+🛡 Firebase keys stored in .env (never pushed to GitHub)
 
-firebase – Authentication
+🧪 MongoDB credentials also stored securely via environment variables
 
-framer-motion – Animations
-
-react-leaflet – Map display
-
-moment – Date calculations and comparisons
-
-react-toastify or sweetalert2 – Notifications
-
-axios – HTTP requests
-
-dotenv – Environment variable management
-
-Security
-Firebase configuration keys are stored in environment variables (.env).
-
-MongoDB credentials are secured with environment variables on the server.
-
-
-
+🔐 JWT stored and sent via headers for secure API calls
