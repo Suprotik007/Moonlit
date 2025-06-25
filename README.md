@@ -125,7 +125,7 @@ Timestamp
 
 🔐 JWT stored and sent via headers for secure API calls
 
-##Installation 
+## Installation 
 Clone the repository and install dependencies:
 
 git clone https://github.com/Suprotik007/Moonlit.git cd moonlit npm install npm start
