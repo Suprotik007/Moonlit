@@ -6,6 +6,7 @@ import ReviewContainer from '../Layout/ReviewContainer';
 import FaqContainer from '../Layout/FaqContainer';
 import NewsLetterContainer from '../Layout/NewsLetterContainer';
 import Stats from '../Layout/Stats';
+import Chatbot from '../Components/ChatBot';
 
 
 const Home = () => {
@@ -27,6 +28,7 @@ fetch ('https://cozy-room-server.vercel.app/specialOffers')
            <FeaturedRooms></FeaturedRooms>
            <ReviewContainer></ReviewContainer>
            <FaqContainer></FaqContainer>
+           <Chatbot></Chatbot>
            <div className='grid justify-between sm:w-11/12 mx-auto sm:grid-cols-1 md:grid-cols-2 '>
             <NewsLetterContainer></NewsLetterContainer>
             <Stats></Stats>
