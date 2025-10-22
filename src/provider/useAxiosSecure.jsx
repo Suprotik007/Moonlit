@@ -3,7 +3,7 @@ import { use, useContext } from "react";
 import { AuthContext } from "./AuthProvider";
 
 const axiosInstance=axios.create({
-    baseURL:'https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/',
+    baseURL:'https://cozy-room-server.vercel.app/',
     withCredentials:true,
 })
 

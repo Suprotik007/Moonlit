@@ -9,7 +9,7 @@ const Rooms = () => {
 
   useEffect(() => {
     const query = filter && filter !== 'All' ? `?category=${filter}` : '';
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/allRooms${query}`)
+    fetch(`https://cozy-room-server.vercel.app/allRooms${query}`)
       .then(res => res.json())
       .then(data => setAllRooms(data))
      

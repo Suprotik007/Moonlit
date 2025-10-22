@@ -25,7 +25,7 @@ const location=useLocation()
 
    const [reviews, setReviews] = useState([]);
     useEffect(() => {
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews/${singleRoomDetail.title}`)
+    fetch(`https://cozy-room-server.vercel.app/reviews/${singleRoomDetail.title}`)
       .then(res => res.json())
       .then(data => setReviews(data.reviews || []))
       
@@ -83,7 +83,7 @@ function canBookDate(canBookDate) {
     
     };
 
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${singleRoomDetail._id}`,{
+    fetch(`https://cozy-room-server.vercel.app/bookedRooms/${singleRoomDetail._id}`,{
         method:"POST",
         headers:{ 
             'Content-Type':'application/json'

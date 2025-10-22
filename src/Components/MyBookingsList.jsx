@@ -71,7 +71,7 @@ return today.isSameOrBefore(finalDate)
   .then((result)=>{
 if(result.isConfirmed){
   setDeleting(true)
-   fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${_id}`, {
+   fetch(`https://cozy-room-server.vercel.app/bookedRooms/${_id}`, {
           method: 'DELETE',
         })
         .then(res => res.json())
@@ -118,7 +118,7 @@ title:bookings.title,
     date:dateNew
   };
 
-  fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews', { 
+  fetch('https://cozy-room-server.vercel.app/reviews', { 
     method: "POST",
     headers: { 
       'Content-Type': 'application/json'
@@ -158,7 +158,7 @@ if (!canUpdateDate(dateOnly)) {
   }
   
 
-  fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${bookings._id}`, {
+  fetch(`https://cozy-room-server.vercel.app/bookedRooms/${bookings._id}`, {
     method: "PATCH",
     headers: {
       'Content-Type': 'application/json'

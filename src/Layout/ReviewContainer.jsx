@@ -7,7 +7,7 @@ const ReviewContainer = () => {
   const [showReview, setShowReview] = useState([]);
 
   useEffect(() => {
-    fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/clientReviews')
+    fetch('https://cozy-room-server.vercel.app/clientReviews')
       .then(res => res.json())
       .then(data => {
         setShowReview(data || []);

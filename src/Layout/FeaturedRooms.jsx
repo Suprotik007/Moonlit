@@ -4,7 +4,7 @@ import TopRoomCard from '../Components/TopRoomCard';
 const FeaturedRooms = () => {
     const [topRooms,setTopRooms]=useState([])
     useEffect(()=>{
-        fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/topRooms')
+        fetch('https://cozy-room-server.vercel.app/topRooms')
         .then(res=>res.json())
         .then(data=>{setTopRooms(data)}
         )
