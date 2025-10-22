@@ -16,7 +16,7 @@ const AllRoomCard = ({ singleRoom }) => {
   return (
    <Link to={`/roomDetails/${singleRoom._id}`}>
     <motion.div
-      className="rounded-2xl  text-left bg-base-200 m-5 border-2 border-gray-700 shadow-lg"
+      className="rounded-2xl  lg:h-[490px] text-left bg-base-200 m-5 border-2 border-gray-700 shadow-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{rotate:360,  opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
