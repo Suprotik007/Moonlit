@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyBookingsList from '../Components/MyBookingsList';
 import { AuthContext } from '../provider/AuthProvider';
 import useAxiosSecure from '../provider/useAxiosSecure';
-import { auth } from '../Firebase';
 
 
 const MyBookings = () => {
@@ -17,11 +16,15 @@ const MyBookings = () => {
         const fetchBookings = async () => {
             try {
                 if (user?.email) {
-                    const response = await axiosSecure.get(`bookedRooms?email=${user.email}`);
+                    const response = await axiosSecure.get('bookedRooms');
                     setMyBookings(response.data);
+                } else {
+                    setError('User not authenticated');
                 }
-            } 
-            finally {
+            } catch (err) {
+                console.error('Failed to fetch bookings:', err);
+                setError(err.response?.data?.message || err.message || 'Failed to fetch bookings');
+            } finally {
                 setLoading(false);
             }
         };

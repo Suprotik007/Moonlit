@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from "motion/react"
 import PrivateRoute from '../provider/PrivateRoute'
+import useAxiosSecure from '../provider/useAxiosSecure';
 const TopRoomCard = ({ singleRoom }) => {
    const [reviewCount, setReviewCount] = useState();
+   const axiosSecure = useAxiosSecure();
     useEffect(() => {
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews/${singleRoom.title}`)
-      .then(res => res.json())
-      // .then(data => console.log(data.total))
-      .then(data => setReviewCount(data.total))
-  
-  }, [singleRoom.title]);
+    axiosSecure.get(`/reviews/${singleRoom.title}`)
+      .then(res => setReviewCount(res.data.total))
+      .catch(error => console.error('Error fetching review count:', error));
+
+  }, [singleRoom.title, axiosSecure]);
   
   return (
     <motion.div

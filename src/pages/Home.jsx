@@ -6,24 +6,27 @@ import ReviewContainer from '../Layout/ReviewContainer';
 import FaqContainer from '../Layout/FaqContainer';
 import NewsLetterContainer from '../Layout/NewsLetterContainer';
 import Stats from '../Layout/Stats';
+import useAxiosSecure from '../provider/useAxiosSecure';
 
 
 const Home = () => {
     const [offers, setOffers] = useState([]);
-const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+    const axiosSecure = useAxiosSecure();
 
-useEffect(()=>{
-fetch ('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/specialOffers')
-.then(res=>res.json())
-.then(data=>{setOffers(data)
-    setShowModal(true)
-})
-},[])
+    useEffect(() => {
+        axiosSecure.get('/specialOffers')
+            .then(res => {
+                setOffers(res.data);
+                //  setShowModal(true); 
+            })
+            .catch(error => console.error('Error fetching special offers:', error));
+    }, [axiosSecure]);
     return (
         <div>
             
             <Banner></Banner>
-           <FindUs></FindUs>
+          
            <FeaturedRooms></FeaturedRooms>
            <ReviewContainer></ReviewContainer>
            <FaqContainer></FaqContainer>
@@ -31,9 +34,10 @@ fetch ('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/special
             <NewsLetterContainer></NewsLetterContainer>
             <Stats></Stats>
            </div>
+            <FindUs></FindUs>
            {showModal && (
-  <div className="fixed inset-0  bg-opacity-70 flex justify-center items-center z-50 p-4">
-    <div className="relative max-w-lg w-full rounded-lg overflow-hidden shadow-lg">
+  <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50 p-4" onClick={() => setShowModal(false)}>
+    <div className="relative max-w-lg w-full rounded-lg overflow-hidden shadow-lg" onClick={(e) => e.stopPropagation()}>
       <button
         className="absolute top-2 right-2 text-white text-4xl font-bold z-50"
         onClick={() => setShowModal(false)}

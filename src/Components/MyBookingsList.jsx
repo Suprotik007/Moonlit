@@ -3,12 +3,13 @@ import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import moment from 'moment/moment';
+import useAxiosSecure from '../provider/useAxiosSecure';
 
 const MyBookingsList = ({bookings,onDelete}) => {
 const [deleting,setDeleting]=useState(false)
 const [isModalOpen, setIsModalOpen] = useState(false);
 
-// const[calender,setCalender]=useState()
+
 const[isCalenderOpen,setIsCalenderOpen]=useState(false)
 const openCalender=()=>setIsCalenderOpen(true)
 const closeCalender=()=>setIsCalenderOpen(false)
@@ -17,7 +18,8 @@ const[newDate, setNewDate]=useState()
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const {user} =useContext(AuthContext)
+  const {user} =useContext(AuthContext) 
+  const axiosSecure = useAxiosSecure();
   
   
    const [formData, setFormData] = useState({
@@ -28,9 +30,7 @@ const[newDate, setNewDate]=useState()
     date: '',
     roomId:''
   });
-  // const [formData2,setFormData2]=useState({
-  //   newDate:''
-  // })
+ 
   const cancellationDeadline=(bookedDate)=> {
 const bookingDate=moment(bookedDate,'YYYY-MM-DD')
 const finalDate=bookingDate.clone().subtract(3,'days')
@@ -71,13 +71,9 @@ return today.isSameOrBefore(finalDate)
   .then((result)=>{
 if(result.isConfirmed){
   setDeleting(true)
-   fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${_id}`, {
-          method: 'DELETE',
-        })
-        .then(res => res.json())
-          .then(data => {
-            if (data.deletedCount) {
-          //  setDeleting(true)
+   axiosSecure.delete(`/bookedRooms/${_id}`)
+          .then(res => {
+            if (res.data.deletedCount) {
               Swal.fire({
                 title: "Cancelled!",
                 text: "Your booking has been cancelled.",
@@ -86,6 +82,7 @@ if(result.isConfirmed){
                 onDelete(_id)
             }
           })
+          .catch(error => console.error('Error cancelling booking:', error));
       }
     })
   }
@@ -105,9 +102,9 @@ const handleChange = (e) => {
 const handlePost = (e) => {
   e.preventDefault();
   const dateNew =  new Date().toISOString().split('T')[0]
- 
+
   const reviewData = {
-  
+
 title:bookings.title,
     description: formData.description,
     rating: formData.rating,
@@ -118,19 +115,9 @@ title:bookings.title,
     date:dateNew
   };
 
-  fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews', { 
-    method: "POST",
-    headers: { 
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(reviewData)
-  })
+  axiosSecure.post('/reviews', reviewData)
   .then(res => {
-    
-    return res.json();
-  })
-  .then(data => {
-    toast.success('Review posted successfully!'); 
+    toast.success('Review posted successfully!');
     setFormData({
       description: '',
       rating: '',
@@ -138,7 +125,8 @@ title:bookings.title,
     });
     closeModal();
   })
-  
+  .catch(error => console.error('Error posting review:', error));
+
 };
    const handleUpdateDate=(e)=>{
 e.preventDefault()
@@ -156,23 +144,16 @@ if (!canUpdateDate(dateOnly)) {
     });
     return;
   }
-  
 
-  fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${bookings._id}`, {
-    method: "PATCH",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    
-    body: JSON.stringify({ newDate: dateOnly })
-  })
-    .then(res => res.json())
-    .then(data => {
-        toast.success('Date updated!'); 
+
+  axiosSecure.patch(`/bookedRooms/${bookings._id}`, { newDate: dateOnly })
+    .then(res => {
+        toast.success('Date updated!');
         setFormData(prev => ({ ...prev, date: '' }));
         closeCalender();
-      
+
     })
+    .catch(error => console.error('Error updating date:', error));
 
 };
 

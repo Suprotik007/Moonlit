@@ -2,19 +2,20 @@
 
 import React, { useEffect, useState } from 'react';
 import ReviewCards from '../Components/ReviewCards';
+import useAxiosSecure from '../provider/useAxiosSecure';
 
 const ReviewContainer = () => {
   const [showReview, setShowReview] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/clientReviews')
-      .then(res => res.json())
-      .then(data => {
-        setShowReview(data || []);
-        // console.log(data);
+    axiosSecure.get('/clientReviews')
+      .then(res => {
+        setShowReview(res.data || []);
+        // console.log(res.data);
       })
-      
-  }, []);
+      .catch(error => console.error('Error fetching client reviews:', error));
+  }, [axiosSecure]);
 
   return (
     <div className='w-11/12 mx-auto'>

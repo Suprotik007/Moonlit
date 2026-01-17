@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import TopRoomCard from '../Components/TopRoomCard';
+import useAxiosSecure from '../provider/useAxiosSecure';
 
 const FeaturedRooms = () => {
     const [topRooms,setTopRooms]=useState([])
+    const axiosSecure = useAxiosSecure();
     useEffect(()=>{
-        fetch('https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/topRooms')
-        .then(res=>res.json())
-        .then(data=>{setTopRooms(data)}
+        axiosSecure.get('/topRooms')
+        .then(res=>{setTopRooms(res.data)}
         )
-    })
+        .catch(error => console.error('Error fetching top rooms:', error));
+    }, [axiosSecure])
     return (
         <div className='w-11/12 mx-auto gap-8'> 
         <h1 className='text-4xl text-center font-semibold text-gray-600 mt-15 border-b-2 pb-5 w-4/12 mx-auto mb-5'>Featured Rooms</h1>

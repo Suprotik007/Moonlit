@@ -8,10 +8,12 @@ import { useNavigate } from 'react-router';
 import {useLocation} from 'react-router'
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../provider/useAxiosSecure';
     
 const RoomDetailsCard = ({ singleRoomDetail }) => {
   const navigate = useNavigate();
   const {user} =useContext(AuthContext)
+  const axiosSecure = useAxiosSecure();
 
     const [bookingDate, setBookingDate] = useState('');
   const [bookingData,setBookingData]=useState(singleRoomDetail.available)
@@ -25,18 +27,17 @@ const location=useLocation()
 
    const [reviews, setReviews] = useState([]);
     useEffect(() => {
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/reviews/${singleRoomDetail.title}`)
-      .then(res => res.json())
-      .then(data => setReviews(data.reviews || []))
-      
-  
-  }, [singleRoomDetail.title]);
+    axiosSecure.get(`/reviews/${singleRoomDetail.title}`)
+      .then(res => setReviews(res.data.reviews || []))
+      .catch(error => console.error('Error fetching reviews:', error));
+
+  }, [singleRoomDetail.title, axiosSecure]);
   
   
   useEffect(() => {
   const checkIfRoomBooked = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/bookedRooms/${singleRoomDetail._id}`);
+      const res = await fetch(`https://cozy-room-server.vercel.app/bookedRooms/${singleRoomDetail._id}`);
       const data = await res.json();
       if (data.isBooked) {
         setAvailable(false); 
@@ -83,16 +84,9 @@ function canBookDate(canBookDate) {
     
     };
 
-    fetch(`https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/bookedRooms/${singleRoomDetail._id}`,{
-        method:"POST",
-        headers:{ 
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify(confirmedBookingData)
-    })
-        .then(res=>res.json())
-    .then(data=>
-      console.log('adding data to db'))
+    axiosSecure.post(`/bookedRooms/${singleRoomDetail._id}`, confirmedBookingData)
+        .then(res => console.log('adding data to db'))
+        .catch(error => console.error('Error booking room:', error));
     // console.log('Submitting booking:', confirmedBookingData);
        setAvailable(false)
     toast.success('Booked successfully!')

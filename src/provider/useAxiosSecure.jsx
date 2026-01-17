@@ -1,35 +1,35 @@
 import axios from "axios";
-import { use, useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
+import { auth } from "../Firebase";
 
-const axiosInstance=axios.create({
-    baseURL:'https://cozy-room-server-4kz4t7qtu-suprotiks-projects.vercel.app/',
-    withCredentials:true,
-})
+const axiosInstance = axios.create({
+  baseURL: '/api',
+});
 
 const useAxiosSecure = () => {
-    const { logOut, user, refreshToken } = useContext(AuthContext);
-    
-    axiosInstance.interceptors.request.use(async (config) => {
-        if (user) {
-            const token = await user.getIdToken();
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    });
+  const { logOut } = useContext(AuthContext);
 
-    axiosInstance.interceptors.response.use(
-        response => response,
-        async (error) => {
-            if (error.response?.status === 401) {
-                await logOut();
-                // Redirect to login or handle unauthorized
-            }
-            return Promise.reject(error);
-        }
-    );
+  axiosInstance.interceptors.request.use(async (config) => {
+    if (auth.currentUser) {
+      const token = await auth.currentUser.getIdToken();
+      // console.log("Sending token:", token);
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
 
-    return axiosInstance;
+  axiosInstance.interceptors.response.use(
+    response => response,
+    async (error) => {
+      if (error.response?.status === 401 && auth.currentUser) {
+        await logOut();
+      }
+      return Promise.reject(error);
+    }
+  );
 
-}
-export default useAxiosSecure
+  return axiosInstance;
+};
+
+export default useAxiosSecure;
