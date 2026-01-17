@@ -6,8 +6,8 @@ import ReviewContainer from '../Layout/ReviewContainer';
 import FaqContainer from '../Layout/FaqContainer';
 import NewsLetterContainer from '../Layout/NewsLetterContainer';
 import Stats from '../Layout/Stats';
+import Chatbot from '../Components/Chatbot';
 import useAxiosSecure from '../provider/useAxiosSecure';
-
 
 const Home = () => {
     const [offers, setOffers] = useState([]);
@@ -18,18 +18,20 @@ const Home = () => {
         axiosSecure.get('/specialOffers')
             .then(res => {
                 setOffers(res.data);
-                //  setShowModal(true); 
+                setShowModal(true);
             })
             .catch(error => console.error('Error fetching special offers:', error));
     }, [axiosSecure]);
+
     return (
         <div>
-            
+
             <Banner></Banner>
-          
+
            <FeaturedRooms></FeaturedRooms>
            <ReviewContainer></ReviewContainer>
            <FaqContainer></FaqContainer>
+           <Chatbot></Chatbot>
            <div className='grid justify-between sm:w-11/12 mx-auto sm:grid-cols-1 md:grid-cols-2 '>
             <NewsLetterContainer></NewsLetterContainer>
             <Stats></Stats>
@@ -50,10 +52,10 @@ const Home = () => {
         <div key={offer._id} className="relative">
           <img
             src={offer.image}
-        
+
             className="w-full h-auto opacity-100  object-cover"
           />
-        
+
           <div className="absolute inset-0 gap-8 flex flex-col justify-center items-center text-center p-6">
             <h3 className="text-7xl font-extrabold text-white mb-2 drop-shadow-lg">
               {offer.title}

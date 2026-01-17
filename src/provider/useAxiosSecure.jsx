@@ -3,9 +3,10 @@ import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
 import { auth } from "../Firebase";
 
-const axiosInstance = axios.create({
-  baseURL: '/api',
-});
+const axiosInstance=axios.create({
+    baseURL:'https://cozy-room-server.vercel.app/',
+    withCredentials:true,
+})
 
 const useAxiosSecure = () => {
   const { logOut } = useContext(AuthContext);

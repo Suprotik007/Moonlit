@@ -52,13 +52,13 @@ const Navbar = () => {
   )
 
   return (
-   <div className=''>
+   <div className='sticky top-0 z-50 bg-white'>
 
      <div className="navbar  px-5 mt-2  sm:w-12/12 md:w-11/12 mx-auto border-b-2 ">
       <div className="navbar-start">
    <div className="dropdown ">
     <div tabIndex={0} role="button" className="btn btn-ghost  text-black lg:hidden">
-         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5  hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+         <svg xmlns="http://www.w3.org/2000/svg" classNa me="h-5 w-5  hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
        </div>
        <ul
          tabIndex={0}

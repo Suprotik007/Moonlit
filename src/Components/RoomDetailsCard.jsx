@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
@@ -9,7 +8,7 @@ import {useLocation} from 'react-router'
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../provider/useAxiosSecure';
-    
+
 const RoomDetailsCard = ({ singleRoomDetail }) => {
   const navigate = useNavigate();
   const {user} =useContext(AuthContext)
@@ -32,15 +31,14 @@ const location=useLocation()
       .catch(error => console.error('Error fetching reviews:', error));
 
   }, [singleRoomDetail.title, axiosSecure]);
-  
-  
+
+
   useEffect(() => {
   const checkIfRoomBooked = async () => {
     try {
-      const res = await fetch(`https://cozy-room-server.vercel.app/bookedRooms/${singleRoomDetail._id}`);
-      const data = await res.json();
-      if (data.isBooked) {
-        setAvailable(false); 
+      const res = await axiosSecure.get(`/bookedRooms/${singleRoomDetail._id}`);
+      if (res.data.isBooked) {
+        setAvailable(false);
       }
     } catch (error) {
       console.error('Error checking booking status:', error);
@@ -48,19 +46,19 @@ const location=useLocation()
   };
 
   checkIfRoomBooked();
-}, [singleRoomDetail._id]);
+}, [singleRoomDetail._id, axiosSecure]);
 
 function canBookDate(canBookDate) {
   const bookingDate = moment(canBookDate, 'YYYY-MM-DD').startOf('day');
   const today = moment().startOf('day');
-  
+
   return bookingDate.isSameOrAfter(today);
 }
 
   const handleConfirmBooking=(e)=>{
         e.preventDefault()
         const dateOnly = bookingDate.split('T')[0];
-    
+
         if (!canBookDate(dateOnly)) {
             Swal.fire({
               icon: 'error',
@@ -81,7 +79,7 @@ function canBookDate(canBookDate) {
       Size: singleRoomDetail.size,
       Price: singleRoomDetail.price,
       Booked_For:dateOnly
-    
+
     };
 
     axiosSecure.post(`/bookedRooms/${singleRoomDetail._id}`, confirmedBookingData)
@@ -90,11 +88,11 @@ function canBookDate(canBookDate) {
     // console.log('Submitting booking:', confirmedBookingData);
        setAvailable(false)
     toast.success('Booked successfully!')
- 
+
   }
 
   const handleBookNowClick = () => {
-  
+
     if (!user) {
         navigate('/login', { state: { from: location.pathname } });
       return;
@@ -104,11 +102,11 @@ function canBookDate(canBookDate) {
 
   return (
     <div className='my-10'>
-  
+
       <div className='mt-10 w-11/12 sm:w-9/12 mx-auto'>
         <div  className="p-3 rounded-2xl border-3 border-gray-600 bg-amber-20 shadow-sm flex flex-col sm:flex-row">
           <figure className="sm:w-1/2">
-            <img 
+            <img
               src={singleRoomDetail.image}
               alt={singleRoomDetail.title}
               className="rounded-xl object-cover w-full h-full"
@@ -122,8 +120,8 @@ function canBookDate(canBookDate) {
             <p className="text-lg font-bold">
               Facilities : <span className='font-bold text-fuchsia-600'>{singleRoomDetail.facilities.join(', ')}</span>
             </p>
-  
-   
+
+
    <p className="text-lg font-bold">Reviews:</p>
 <div >
   <ul>
@@ -131,16 +129,16 @@ function canBookDate(canBookDate) {
   {reviews.map((review) => (
     <li key={review._id} className="mb-2 border-2 rounded-xl font-bold border-gray-600 p-2">
       <span className="font-bold text-amber-800 ">{review.userName}:</span> {review.description} ||
-      
-      <span className="ml-2 font-bold text-blue-600">Rating: {review.rating}</span> 
-    
+
+      <span className="ml-2 font-bold text-blue-600">Rating: {review.rating}</span>
+
     </li>
   ))}
 </ul>
 </div>
 
             <div className="card-actions justify-end mt-4">
-           
+
          <button
               disabled={!available}
               className={`btn btn-outline rounded-4xl hover:bg-gray-600 hover:text-white ${!available ? 'bg-gray-900 cursor-not-allowed' : ''}`}
@@ -148,7 +146,7 @@ function canBookDate(canBookDate) {
             >
               {available ? 'Book Now' : 'Not available'}
             </button>
-           
+
 
             </div>
           </div>
@@ -162,7 +160,7 @@ function canBookDate(canBookDate) {
       onSubmit={handleConfirmBooking}
       className="bg-gray-900 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"
     >
-      <button 
+      <button
         type="button"
         className="absolute top-2 right-2 text-gray-200 hover:text-amber-300 text-2xl font-bold"
         onClick={closeModal}
@@ -171,7 +169,7 @@ function canBookDate(canBookDate) {
         &times;
       </button>
        <figure className="pb-1 sm:max-w-xs w-3/4 mx-auto">
-            <img 
+            <img
               src={singleRoomDetail.image}
               alt={singleRoomDetail.title}
               className="rounded-xl object-cover w-full h-full"
@@ -183,9 +181,9 @@ function canBookDate(canBookDate) {
       <p className="text-lg font-bold">
         Facilities : <span className='font-bold text-amber-600'>{singleRoomDetail.facilities.join(', ')}</span>
       </p> <br />
-      <p className="text-lg pb-2 font-bold">Pick the booking date :</p> 
+      <p className="text-lg pb-2 font-bold">Pick the booking date :</p>
       <input type="datetime-local"  value={bookingDate} onChange={(e) => setBookingDate(e.target.value)} className="input" required />
-      <button 
+      <button
         type='submit'
         className="btn btn-outline border-2 mt-5 rounded-4xl"
       >

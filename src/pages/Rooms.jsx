@@ -10,11 +10,20 @@ const Rooms = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+<<<<<<< HEAD
     const query = filter && filter !== 'all' ? `?category=${filter}` : '';
     axiosSecure.get(`/allRooms${query}`)
       .then(res => setAllRooms(res.data))
       .catch(error => console.error('Error fetching all rooms:', error));
   }, [filter, axiosSecure]);
+=======
+    const query = filter && filter !== 'All' ? `?category=${filter}` : '';
+    fetch(`https://cozy-room-server.vercel.app/allRooms${query}`)
+      .then(res => res.json())
+      .then(data => setAllRooms(data))
+     
+  }, [filter]);
+>>>>>>> 376cc610c0f4400e9b388d48eb9f01e8badde159
 
   return (
     <div>

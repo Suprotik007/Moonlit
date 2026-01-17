@@ -18,19 +18,19 @@ const[newDate, setNewDate]=useState()
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const {user} =useContext(AuthContext) 
+  const {user} =useContext(AuthContext)
   const axiosSecure = useAxiosSecure();
-  
-  
+
+
    const [formData, setFormData] = useState({
-    
+
    name :'',
     description: '',
     rating: '',
     date: '',
     roomId:''
   });
- 
+
   const cancellationDeadline=(bookedDate)=> {
 const bookingDate=moment(bookedDate,'YYYY-MM-DD')
 const finalDate=bookingDate.clone().subtract(3,'days')
@@ -43,7 +43,7 @@ return today.isSameOrBefore(finalDate)
   function canUpdateDate(updatedDate) {
   const bookingDate = moment(updatedDate, 'YYYY-MM-DD').startOf('day');
   const today = moment().startOf('day');
-  
+
   return bookingDate.isSameOrAfter(today);
 }
 
@@ -86,7 +86,7 @@ if(result.isConfirmed){
       }
     })
   }
-const handleReview=()=>{ 
+const handleReview=()=>{
   openModal()
 }
 
@@ -97,7 +97,7 @@ const handleChange = (e) => {
       [name]: value,
     }));
   };
-  
+
 
 const handlePost = (e) => {
   e.preventDefault();
@@ -157,18 +157,18 @@ if (!canUpdateDate(dateOnly)) {
 
 };
 
-  
+
     return (
         <div className='mb-5'>
-         
+
      <ul className="list border-2 border-gray-800 rounded-box shadow-lg">
   <li className="list-row flex flex-col sm:flex-row gap-4 p-4">
-    
+
     <div className="w-full sm:w-auto">
-      <img 
-        className="w-full sm:w-50 rounded-box" 
-        src={bookings.Image} 
-        alt={bookings.title} 
+      <img
+        className="w-full sm:w-50 rounded-box"
+        src={bookings.Image}
+        alt={bookings.title}
       />
     </div>
 
@@ -176,27 +176,27 @@ if (!canUpdateDate(dateOnly)) {
       <div className="card-title mb-5 text-gray-800 text-xl sm:text-2xl">
         {bookings.title}
       </div>
-      
+
       <div className="text-sm card-title uppercase font-semibold text-gray-600 mt-2 sm:mt-0">
         Booked For: {bookings.Booked_For}
-        <button 
-          onClick={handleUpdateDate} 
+        <button
+          onClick={handleUpdateDate}
           className="badge badge-outline border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300 ml-2"
         >
           Update Date
         </button>
       </div>
 
-    
+
       <div className="flex flex-wrap gap-2 mt-4 sm:hidden">
-        <button 
-          onClick={() => handleReview(bookings._id)} 
+        <button
+          onClick={() => handleReview(bookings._id)}
           className="btn btn-outline text-green-700 hover:bg-green-700 hover:text-gray-300 border-2 rounded-full text-sm"
         >
           Post Review
         </button>
-        <button 
-          onClick={() => handleCancel(bookings._id)} 
+        <button
+          onClick={() => handleCancel(bookings._id)}
           className="btn btn-outline border-2 text-red-600 hover:bg-red-600 hover:text-white rounded-full text-sm"
         >
           Cancel Booking
@@ -204,16 +204,16 @@ if (!canUpdateDate(dateOnly)) {
       </div>
     </div>
 
-    
+
     <div className="hidden sm:flex gap-3 items-center">
-      <button 
-        onClick={() => handleReview(bookings._id)} 
+      <button
+        onClick={() => handleReview(bookings._id)}
         className="btn btn-outline text-green-700 hover:bg-green-600 hover:text-white border-2 rounded-full text-sm"
       >
         Post Review
       </button>
-      <button 
-        onClick={() => handleCancel(bookings._id)} 
+      <button
+        onClick={() => handleCancel(bookings._id)}
         className="btn btn-outline border-2 text-red-600 hover:bg-red-600 hover:text-white rounded-full text-sm"
       >
         Cancel Booking
@@ -227,7 +227,7 @@ if (!canUpdateDate(dateOnly)) {
       onSubmit={handlePost}
       className="bg-gray-900 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"
     >
-      <button 
+      <button
         type="button"
         className="absolute top-2 right-2 text-gray-200 hover:text-amber-300 text-2xl font-bold"
         onClick={closeModal}
@@ -246,16 +246,16 @@ if (!canUpdateDate(dateOnly)) {
 {/* rating */}
 <label className="gap-5 card-title mb-2">
   <span className="">Rating : </span>
-  <select  name="rating" 
+  <select  name="rating"
     value={formData.rating}
-    onChange={handleChange} 
+    onChange={handleChange}
     className='bg-gray-300 rounded-full text-black'>
     <option>1</option>
     <option>2</option>
     <option>3</option>
     <option>4</option>
     <option>5</option>
-    
+
   </select>
 </label>
 {/* comment */}
@@ -275,7 +275,7 @@ if (!canUpdateDate(dateOnly)) {
         <div type='date' id='date' name='date' value={formData.date} className='card-title '>
          Date :  {new Date().getDate()}/{new Date().getMonth()}/{new Date().getFullYear()}
           </div>
-      <button 
+      <button
         type='submit'
         className="btn btn-outline border-2 mt-5 rounded-4xl"
       >
@@ -297,7 +297,7 @@ if (!canUpdateDate(dateOnly)) {
         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
         className="input"
       />
-      <button 
+      <button
       onClick={handleSetDate}
         type='submit'
         className="btn btn-outline border-2 text-white hover:text-black mt-5 rounded-4xl"
@@ -310,15 +310,8 @@ if (!canUpdateDate(dateOnly)) {
 
 
         </div>
-        
+
     );
 };
 
 export default MyBookingsList;
-
-
-
-
-
-
-    
