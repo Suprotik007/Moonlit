@@ -38,7 +38,7 @@ const Home = () => {
            </div>
             <FindUs></FindUs>
            {showModal && (
-  <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50 p-4" onClick={() => setShowModal(false)}>
+  <div className="fixed inset-0  bg-opacity-30 flex justify-center items-center z-50 p-4" onClick={() => setShowModal(false)}>
     <div className="relative max-w-lg w-full rounded-lg overflow-hidden shadow-lg" onClick={(e) => e.stopPropagation()}>
       <button
         className="absolute top-2 right-2 text-white text-4xl font-bold z-50"

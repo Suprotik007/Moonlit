@@ -8,21 +8,11 @@ const TopRoomCard = ({ singleRoom }) => {
    const [reviewCount, setReviewCount] = useState();
    const axiosSecure = useAxiosSecure();
     useEffect(() => {
-<<<<<<< HEAD
     axiosSecure.get(`/reviews/${singleRoom.title}`)
       .then(res => setReviewCount(res.data.total))
       .catch(error => console.error('Error fetching review count:', error));
-
   }, [singleRoom.title, axiosSecure]);
-=======
-    fetch(`https://cozy-room-server.vercel.app/reviews/${singleRoom.title}`)
-      .then(res => res.json())
-      // .then(data => console.log(data.total))
-      .then(data => setReviewCount(data.total))
-  
-  }, [singleRoom.title]);
->>>>>>> 376cc610c0f4400e9b388d48eb9f01e8badde159
-  
+
   return (
     <motion.div
       className="rounded-2xl text-left bg-base-00 m-5 border-2 shadow-lg"

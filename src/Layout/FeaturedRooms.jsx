@@ -6,15 +6,9 @@ const FeaturedRooms = () => {
     const [topRooms,setTopRooms]=useState([])
     const axiosSecure = useAxiosSecure();
     useEffect(()=>{
-<<<<<<< HEAD
+
         axiosSecure.get('/topRooms')
-        .then(res=>{setTopRooms(res.data)}
-=======
-        fetch('https://cozy-room-server.vercel.app/topRooms')
-        .then(res=>res.json())
-        .then(data=>{setTopRooms(data)}
->>>>>>> 376cc610c0f4400e9b388d48eb9f01e8badde159
-        )
+        .then(res=>{setTopRooms(res.data)})
         .catch(error => console.error('Error fetching top rooms:', error));
     }, [axiosSecure])
     return (

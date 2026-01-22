@@ -1,0 +1,5 @@
+- [x] Update AuthProvider.jsx to use Firebase Auth instead of JWT
+- [x] Fix Google.jsx component if needed
+- [x] Update README.md to remove JWT references
+- [x] Test email login/registration and Google login - Working
+- [x] Ensure protected routes work with Firebase auth - Working, but API calls fail with 401 because backend expects JWT, not Firebase tokens

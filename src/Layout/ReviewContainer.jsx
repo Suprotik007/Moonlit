@@ -9,18 +9,11 @@ const ReviewContainer = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-<<<<<<< HEAD
-    axiosSecure.get('/clientReviews')
-      .then(res => {
-        setShowReview(res.data || []);
-        // console.log(res.data);
-=======
     fetch('https://cozy-room-server.vercel.app/clientReviews')
       .then(res => res.json())
       .then(data => {
         setShowReview(data || []);
         // console.log(data);
->>>>>>> 376cc610c0f4400e9b388d48eb9f01e8badde159
       })
       .catch(error => console.error('Error fetching client reviews:', error));
   }, [axiosSecure]);

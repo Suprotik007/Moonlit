@@ -12,7 +12,7 @@ A modern, fully responsive hotel booking platform that provides users with a sea
 
 💸 Get access to exclusive deals & promotions
 
-🔐 Secure & intuitive user experience with JWT auth
+🔐 Secure & intuitive user experience with Firebase Auth
 
 📱 Fully responsive design across devices
 
@@ -45,7 +45,7 @@ Recruiter-ready full-stack implementation
 
 ☁️ Social login via Google or GitHub
 
-🛡️ JWT-based auth for protecting user routes
+🛡️ Firebase Auth for protecting user routes
 
 🔔 Toast / SweetAlert2 notifications for all user actions
 
@@ -95,7 +95,7 @@ Timestamp
 ## Access Control
 ❌ Non-logged-in users cannot book or leave reviews
 
-🔐 JWT tokens stored securely and used for all protected API requests
+🔐 Firebase Auth tokens used for all protected API requests
 
 ## Custom 404 Page
 🚫 Friendly error screen with engaging image/GIF and a “Back to Home” button

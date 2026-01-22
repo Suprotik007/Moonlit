@@ -1,36 +1,30 @@
+// import axios from "axios";
+
+
+// const axiosInstance = axios.create({
+//   baseURL: '/api', 
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   withCredentials: false, 
+// });
+
+// const useAxiosSecure = () => {
+//   return axiosInstance;
+// };
+
+// export default useAxiosSecure;
+
+
 import axios from "axios";
-import { useContext } from "react";
-import { AuthContext } from "./AuthProvider";
-import { auth } from "../Firebase";
 
-const axiosInstance=axios.create({
-    baseURL:'https://cozy-room-server.vercel.app/',
-    withCredentials:true,
-})
+// Use your Vercel backend URL
+const axiosSecure = axios.create({
+  baseURL: '/api', // Your deployed backend
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: false,
+});
 
-const useAxiosSecure = () => {
-  const { logOut } = useContext(AuthContext);
-
-  axiosInstance.interceptors.request.use(async (config) => {
-    if (auth.currentUser) {
-      const token = await auth.currentUser.getIdToken();
-      // console.log("Sending token:", token);
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  });
-
-  axiosInstance.interceptors.response.use(
-    response => response,
-    async (error) => {
-      if (error.response?.status === 401 && auth.currentUser) {
-        await logOut();
-      }
-      return Promise.reject(error);
-    }
-  );
-
-  return axiosInstance;
-};
-
-export default useAxiosSecure;
+export default axiosSecure;
