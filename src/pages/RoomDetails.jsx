@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import RoomDetailsCard from '../Components/RoomDetailsCard';
-import useAxiosSecure from '../provider/useAxiosSecure';
 
 const RoomDetails = () => {
     const { _id } = useParams();
     const [roomDetails,setRoomDetails]=useState([])
-    const axiosSecure = useAxiosSecure();
+
+    const BACKEND_URL = 'https://cozy-room-server.vercel.app';
+
 useEffect(()=>{
-    axiosSecure.get(`/allRooms/${_id}`)
-    .then(res=>setRoomDetails([res.data]))
-    .catch(error => console.error('Error fetching room details:', error));
-},[_id, axiosSecure])
+    const fetchRoomDetails = async () => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/allRooms/${_id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setRoomDetails([data]);
+        } catch (error) {
+            console.error('Error fetching room details:', error);
+        }
+    };
+
+    fetchRoomDetails();
+},[_id, BACKEND_URL])
     return (
         <div>
           <h1 className='text-4xl text-center font-semibold text-gray-600 mt-15 border-b-2 pb-5 w-4/12 mx-auto mb-5'>Room Details</h1>

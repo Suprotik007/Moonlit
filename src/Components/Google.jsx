@@ -14,16 +14,14 @@ const Google = () => {
     const provider= new GoogleAuthProvider
     const navigate=useNavigate()
     const handleGoogleReg=()=>{
-        // e.preventDefault()
-        // console.log('google')
+       
         signInWithPopup(auth,provider)
         .then(result=>{
-            // console.log(result);
+            
             navigate('/')
         })
         .catch(error=>{
-            // console.log(error);
-            
+           
         })
         createUser(email,password)
         .then(result=>{
@@ -34,7 +32,7 @@ const Google = () => {
             navigate('/')
           })
           .catch((error)=>{
-            // console.log(error);
+            
             setUser(user)
             
           })

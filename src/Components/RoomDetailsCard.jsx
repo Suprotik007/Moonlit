@@ -7,15 +7,13 @@ import { useNavigate } from 'react-router';
 import {useLocation} from 'react-router'
 import moment from 'moment';
 import Swal from 'sweetalert2';
-import useAxiosSecure from '../provider/useAxiosSecure';
 
 const RoomDetailsCard = ({ singleRoomDetail }) => {
   const navigate = useNavigate();
   const {user} =useContext(AuthContext)
-  const axiosSecure = useAxiosSecure();
+  const BACKEND_URL = 'https://cozy-room-server.vercel.app';
 
     const [bookingDate, setBookingDate] = useState('');
-  const [bookingData,setBookingData]=useState(singleRoomDetail.available)
 
   const[available,setAvailable]=useState(true)
 const location=useLocation()
@@ -26,18 +24,20 @@ const location=useLocation()
 
    const [reviews, setReviews] = useState([]);
     useEffect(() => {
-    axiosSecure.get(`/reviews/${singleRoomDetail.title}`)
-      .then(res => setReviews(res.data.reviews || []))
+    fetch(`${BACKEND_URL}/reviews/${singleRoomDetail.title}`)
+      .then(res => res.json())
+      .then(data => setReviews(data.reviews || []))
       .catch(error => console.error('Error fetching reviews:', error));
 
-  }, [singleRoomDetail.title, axiosSecure]);
+  }, [singleRoomDetail.title]);
 
 
   useEffect(() => {
   const checkIfRoomBooked = async () => {
     try {
-      const res = await axiosSecure.get(`/bookedRooms/${singleRoomDetail._id}`);
-      if (res.data.isBooked) {
+      const response = await fetch(`${BACKEND_URL}/bookedRooms/${singleRoomDetail._id}`);
+      const data = await response.json();
+      if (data.isBooked) {
         setAvailable(false);
       }
     } catch (error) {
@@ -46,7 +46,7 @@ const location=useLocation()
   };
 
   checkIfRoomBooked();
-}, [singleRoomDetail._id, axiosSecure]);
+}, [singleRoomDetail._id]);
 
 function canBookDate(canBookDate) {
   const bookingDate = moment(canBookDate, 'YYYY-MM-DD').startOf('day');
@@ -55,7 +55,7 @@ function canBookDate(canBookDate) {
   return bookingDate.isSameOrAfter(today);
 }
 
-  const handleConfirmBooking=(e)=>{
+  const handleConfirmBooking= async (e)=>{
         e.preventDefault()
         const dateOnly = bookingDate.split('T')[0];
 
@@ -70,7 +70,6 @@ function canBookDate(canBookDate) {
 
                 closeModal();
  const confirmedBookingData = {
-      ...bookingData,
        roomId: singleRoomDetail._id,
       Name: user?.displayName || '',
       email: user?.email || '',
@@ -82,12 +81,24 @@ function canBookDate(canBookDate) {
 
     };
 
-    axiosSecure.post(`/bookedRooms/${singleRoomDetail._id}`, confirmedBookingData)
-        .then(res => console.log('adding data to db'))
-        .catch(error => console.error('Error booking room:', error));
-    // console.log('Submitting booking:', confirmedBookingData);
-       setAvailable(false)
-    toast.success('Booked successfully!')
+    try {
+      const response = await fetch(`${BACKEND_URL}/bookedRooms/${singleRoomDetail._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(confirmedBookingData)
+      });
+      if (!response.ok) {
+        throw new Error('Failed to book room');
+      }
+      console.log('adding data to db');
+      setAvailable(false);
+      toast.success('Booked successfully!');
+    } catch (error) {
+      console.error('Error booking room:', error);
+      toast.error('Failed to book room. Please try again.');
+    }
 
   }
 

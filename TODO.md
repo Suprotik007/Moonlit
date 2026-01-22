@@ -1,5 +1,2 @@
-- [x] Update AuthProvider.jsx to use Firebase Auth instead of JWT
-- [x] Fix Google.jsx component if needed
-- [x] Update README.md to remove JWT references
-- [x] Test email login/registration and Google login - Working
-- [x] Ensure protected routes work with Firebase auth - Working, but API calls fail with 401 because backend expects JWT, not Firebase tokens
+- [x] Refactor src/Components/MyBookingsList.jsx to be a component that renders individual booking items, removing duplicate page logic.
+- [x] Verify the changes work correctly in the application.

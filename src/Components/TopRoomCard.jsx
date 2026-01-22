@@ -3,15 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from "motion/react"
 import PrivateRoute from '../provider/PrivateRoute'
-import useAxiosSecure from '../provider/useAxiosSecure';
 const TopRoomCard = ({ singleRoom }) => {
    const [reviewCount, setReviewCount] = useState();
-   const axiosSecure = useAxiosSecure();
+   
+   const BACKEND_URL = 'https://cozy-room-server.vercel.app';
     useEffect(() => {
-    axiosSecure.get(`/reviews/${singleRoom.title}`)
-      .then(res => setReviewCount(res.data.total))
-      .catch(error => console.error('Error fetching review count:', error));
-  }, [singleRoom.title, axiosSecure]);
+  fetch(`${BACKEND_URL}/reviews/${singleRoom.title}`)
+    .then(res => res.json())
+    .then(data => {
+     
+      setReviewCount(data.total)
+    })
+    .catch(error => console.error('Error fetching review count:', error));
+}, [singleRoom.title]);
 
   return (
     <motion.div

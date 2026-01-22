@@ -8,7 +8,7 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const chatEndRef = useRef(null);
-
+const BACKEND_URL = 'https://cozy-room-server.vercel.app';
   // Auto scroll to bottom when new message arrives
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,7 +24,7 @@ export default function Chatbot() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3000/api/chat", {
+      const res = await fetch(`${BACKEND_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),

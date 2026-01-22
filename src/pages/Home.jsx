@@ -7,21 +7,30 @@ import FaqContainer from '../Layout/FaqContainer';
 import NewsLetterContainer from '../Layout/NewsLetterContainer';
 import Stats from '../Layout/Stats';
 import Chatbot from '../Components/Chatbot';
-import useAxiosSecure from '../provider/useAxiosSecure';
 
 const Home = () => {
     const [offers, setOffers] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const axiosSecure = useAxiosSecure();
+
+  const BACKEND_URL = 'https://cozy-room-server.vercel.app';
 
     useEffect(() => {
-        axiosSecure.get('/specialOffers')
-            .then(res => {
-                setOffers(res.data);
+        const fetchOffers = async () => {
+            try {
+                const response = await fetch(`${BACKEND_URL}/specialOffers`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setOffers(data);
                 setShowModal(true);
-            })
-            .catch(error => console.error('Error fetching special offers:', error));
-    }, [axiosSecure]);
+            } catch (error) {
+                console.error('Error fetching special offers:', error);
+            }
+        };
+
+        fetchOffers();
+    }, [BACKEND_URL]);
 
     return (
         <div>

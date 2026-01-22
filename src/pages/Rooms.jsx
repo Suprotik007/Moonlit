@@ -2,20 +2,34 @@
 
 import React, { useEffect, useState } from 'react';
 import AllRoomCard from '../Components/AllRoomCard';
-import useAxiosSecure from '../provider/useAxiosSecure';
 
 const Rooms = () => {
   const [allRooms, setAllRooms] = useState([]);
   const [filter, setFilter] = useState('All');
-  const axiosSecure = useAxiosSecure();
+
+ 
+const BACKEND_URL = 'https://cozy-room-server.vercel.app';
 
   useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const query = filter && filter !== 'all' ? `?category=${filter}` : '';
+        const url = `${BACKEND_URL}/allRooms${query}`;
+        const response = await fetch(url);
 
-    const query = filter && filter !== 'all' ? `?category=${filter}` : '';
-    axiosSecure.get(`/allRooms${query}`)
-      .then(res => setAllRooms(res.data))
-      .catch(error => console.error('Error fetching all rooms:', error));
-  }, [filter, axiosSecure]);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setAllRooms(data);
+      } catch (error) {
+        console.error('Error fetching all rooms:', error);
+      }
+    };
+
+    fetchRooms();
+  }, [filter, BACKEND_URL]);
 
 
   return (
