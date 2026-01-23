@@ -202,11 +202,11 @@ const MyBookingsList = ({ bookings, onDelete }) => {
                             {bookings.title}
                         </div>
                         
-                        <div className="text-sm card-title uppercase font-semibold text-gray-600 mt-2 sm:mt-0">
+                        <div className="text-sm card-title uppercase font-semibold text-gray-600 mt-2 sm:mt-0 flex flex-col md:flex-row ">
                             Booked For: {bookings.Booked_For}
                             <button 
                                 onClick={handleUpdateDate} 
-                                className="badge badge-outline border-2 text-gray-800 hover:bg-gray-800 hover:text-gray-300 ml-2"
+                                className="badge badge-outline border-2 bg-gray-700 border-white text-gray-200 hover:bg-gray-800 hover:text-gray-300 ml-2"
                             >
                                 Update Date
                             </button>
@@ -251,7 +251,7 @@ const MyBookingsList = ({ bookings, onDelete }) => {
 
             {/* Review Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                <div className="fixed inset-0  bg-opacity-50 flex justify-center items-center z-50">
                     <form
                         onSubmit={handlePost}
                         className="bg-gray-900 p-7 text-gray-300 rounded-xl w-11/12 max-w-md shadow-lg relative"

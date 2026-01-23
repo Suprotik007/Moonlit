@@ -1,2 +1,0 @@
-- [x] Refactor src/Components/MyBookingsList.jsx to be a component that renders individual booking items, removing duplicate page logic.
-- [x] Verify the changes work correctly in the application.

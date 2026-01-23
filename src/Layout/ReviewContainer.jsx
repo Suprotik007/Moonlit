@@ -12,7 +12,7 @@ const ReviewContainer = () => {
       .then(res => res.json())
       .then(data => {
         setShowReview(data || []);
-        // console.log(data);
+        
       })
       .catch(error => console.error('Error fetching client reviews:', error));
   }, []);

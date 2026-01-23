@@ -92,7 +92,7 @@ function canBookDate(canBookDate) {
       if (!response.ok) {
         throw new Error('Failed to book room');
       }
-      console.log('adding data to db');
+      
       setAvailable(false);
       toast.success('Booked successfully!');
     } catch (error) {

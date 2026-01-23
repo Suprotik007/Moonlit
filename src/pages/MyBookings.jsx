@@ -12,11 +12,11 @@ const MyBookings = () => {
 
     useEffect(() => {
         let isMounted = true;
-        console.log('useEffect triggered, user email:', user?.email);
+    
 
         const fetchBookings = async () => {
             try {
-                console.log('Fetching bookings for:', user?.email);
+               
 
                 if (!user?.email) {
                     if (isMounted) {
@@ -27,17 +27,17 @@ const MyBookings = () => {
                 }
 
                 const url = `${BACKEND_URL}/bookedRooms?email=${encodeURIComponent(user.email)}`;
-                console.log('Fetching from URL:', url);
+               
 
                 const response = await fetch(url);
-                console.log('Response status:', response.status);
+           
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                console.log('Bookings response:', data);
+               
                 
                 if (isMounted) {
                     setMyBookings(data);
@@ -69,7 +69,7 @@ const MyBookings = () => {
 
     const removeBooking = useCallback(async (id) => {
         try {
-            console.log('Deleting booking:', id);
+           
             const response = await fetch(`${BACKEND_URL}/bookedRooms/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -89,7 +89,7 @@ const MyBookings = () => {
         }
     }, [user?.email]);
 
-    console.log('MyBookings component render');
+    
 
     if (loading) return (
         <div className="flex justify-center items-center h-64">
