@@ -1,7 +1,7 @@
 ## Moonlit
 A modern, fully responsive hotel booking platform that provides users with a seamless, intuitive experience for discovering and booking hotel rooms. This project merges interactive design, robust backend functionality, and secure user authentication to create an engaging and trustworthy environment across all devices.
 
-## Live Demo: [ https://moolit.netlify.app/ ]
+## Live Demo: [ https://moonlit-ox.vercel.app/ ]
 
 ## Features at a Glance
 🔍 Search & Filter hotel rooms easily
@@ -115,7 +115,7 @@ Timestamp
 ### Notifications	React-Toastify / SweetAlert2
 ### Forms & Validation	Custom + Firebase validation
 ### Dates	Moment.js
-### HTTP Requests	Axios
+
 
 
 ## Security
